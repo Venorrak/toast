@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=3 uid="uid://og17sek5undt"]
+
+[ext_resource type="Script" path="res://Code/Scripts/qte.gd" id="1_hesyt"]
+[ext_resource type="Texture2D" uid="uid://2w32so5grxpn" path="res://Rescources/2d/AButton.png" id="2_ftfvl"]
+[ext_resource type="Texture2D" uid="uid://bu2fvcacrntav" path="res://Rescources/2d/BButton.png" id="3_dfbs8"]
+[ext_resource type="Texture2D" uid="uid://dyo1ttxmv1a7k" path="res://Rescources/2d/arrow2.png" id="4_kg3bw"]
+
+[node name="Qte" type="Node2D"]
+script = ExtResource("1_hesyt")
+nbOfQTE = 10
+safeSpace = 50.0
+QTESpeed = 5.0
+separationSpace = 75
+GoalsY = 500
+
+[node name="Goals" type="Node2D" parent="."]
+position = Vector2(0, 500)
+
+[node name="A" type="Sprite2D" parent="Goals"]
+texture = ExtResource("2_ftfvl")
+
+[node name="B" type="Sprite2D" parent="Goals"]
+texture = ExtResource("3_dfbs8")
+
+[node name="Up" type="Sprite2D" parent="Goals"]
+texture = ExtResource("4_kg3bw")
+
+[node name="Down" type="Sprite2D" parent="Goals"]
+texture = ExtResource("4_kg3bw")
+flip_v = true
+
+[node name="Left" type="Sprite2D" parent="Goals"]
+rotation = 1.5708
+texture = ExtResource("4_kg3bw")
+flip_v = true
+
+[node name="Right" type="Sprite2D" parent="Goals"]
+rotation = 1.5708
+texture = ExtResource("4_kg3bw")
+
+[node name="StartQte" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="StartQte" to="." method="_on_start_qte_timeout"]
