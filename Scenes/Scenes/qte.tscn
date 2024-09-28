@@ -1,9 +1,24 @@
-[gd_scene load_steps=5 format=3 uid="uid://og17sek5undt"]
+[gd_scene load_steps=7 format=3 uid="uid://og17sek5undt"]
 
 [ext_resource type="Script" path="res://Code/Scripts/qte.gd" id="1_hesyt"]
 [ext_resource type="Texture2D" uid="uid://2w32so5grxpn" path="res://Rescources/2d/AButton.png" id="2_ftfvl"]
 [ext_resource type="Texture2D" uid="uid://bu2fvcacrntav" path="res://Rescources/2d/BButton.png" id="3_dfbs8"]
 [ext_resource type="Texture2D" uid="uid://dyo1ttxmv1a7k" path="res://Rescources/2d/arrow2.png" id="4_kg3bw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6n3n2"]
+bg_color = Color(0.144063, 0.144063, 0.144062, 1)
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_blend = true
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+shadow_color = Color(0, 0, 0, 0.482353)
+shadow_size = 4
+shadow_offset = Vector2(3.31, 3.33)
+
+[sub_resource type="Theme" id="Theme_16riv"]
+Panel/styles/panel = SubResource("StyleBoxFlat_6n3n2")
 
 [node name="Qte" type="Node2D"]
 script = ExtResource("1_hesyt")
@@ -11,7 +26,14 @@ nbOfQTE = 10
 safeSpace = 50.0
 QTESpeed = 5.0
 separationSpace = 75
-GoalsY = 500
+GoalsY = 550
+topY = 70
+
+[node name="Panel" type="Panel" parent="."]
+offset_top = 20.0
+offset_right = 475.0
+offset_bottom = 620.0
+theme = SubResource("Theme_16riv")
 
 [node name="Goals" type="Node2D" parent="."]
 position = Vector2(0, 500)

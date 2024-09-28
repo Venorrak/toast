@@ -1,16 +1,17 @@
-[gd_scene load_steps=14 format=3 uid="uid://22f7y5815pvg"]
+[gd_scene load_steps=15 format=3 uid="uid://22f7y5815pvg"]
 
 [ext_resource type="Texture2D" uid="uid://bkowr3t32fkn4" path="res://Rescources/2d/toast.png" id="1_1l4dl"]
-[ext_resource type="Script" path="res://Code/Scripts/test_bounce.gd" id="1_kt6q2"]
 [ext_resource type="Script" path="res://Code/Scripts/world.gd" id="1_kv0b3"]
+[ext_resource type="Texture2D" uid="uid://yj4bge7r8eqy" path="res://Rescources/2d/target.png" id="2_0hxpd"]
 [ext_resource type="Shader" path="res://Code/Shaders/pixelated.gdshader" id="2_8ru73"]
 [ext_resource type="Texture2D" uid="uid://ch0jv0psj74a0" path="res://Rescources/2d/progress_edge.png" id="2_b0wuk"]
+[ext_resource type="PackedScene" uid="uid://dscos81yscrql" path="res://Scenes/Scenes/ProgressBar.tscn" id="2_qlfrv"]
 [ext_resource type="Texture2D" uid="uid://uifcsn767y1l" path="res://Rescources/2d/progress_inside.png" id="3_ccj6t"]
 [ext_resource type="Texture2D" uid="uid://caykmy7xsnmvw" path="res://Rescources/2d/arrow.png" id="5_8mnj4"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_utmbd"]
-friction = 0.0
-bounce = 1.0
+friction = 0.75
+bounce = 0.9
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_d8xs1"]
 shader = ExtResource("2_8ru73")
@@ -19,13 +20,13 @@ shader_parameter/handle_scale = true
 shader_parameter/handle_subpixels = false
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tnoqe"]
-size = Vector2(20, 648)
+size = Vector2(20, 3541)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oq1at"]
 size = Vector2(1152, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bo7f5"]
-size = Vector2(20, 648)
+size = Vector2(20, 3541)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v7gx7"]
 size = Vector2(1152, 20)
@@ -34,7 +35,18 @@ size = Vector2(1152, 20)
 script = ExtResource("1_kv0b3")
 rotationSpeed = 1.5
 gaugeSpeed = 10.0
-maxSpeed = 500
+maxSpeed = 1250
+maxZoomCamera = 0.3
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(576, 324)
+process_callback = 0
+position_smoothing_enabled = true
+
+[node name="Target" type="Sprite2D" parent="."]
+position = Vector2(576, -2569)
+scale = Vector2(3, 3)
+texture = ExtResource("2_0hxpd")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -57,61 +69,51 @@ texture_under = ExtResource("2_b0wuk")
 texture_progress = ExtResource("3_ccj6t")
 
 [node name="Arrow" type="Sprite2D" parent="."]
-position = Vector2(568, 496)
+position = Vector2(576, 496)
 scale = Vector2(2, 2)
 texture = ExtResource("5_8mnj4")
 
 [node name="Aim" type="Node2D" parent="Arrow"]
 position = Vector2(-0.5, -25)
 
-[node name="RigidBody2D" type="RigidBody2D" parent="."]
-position = Vector2(565, 289)
-mass = 0.001
+[node name="toast" type="RigidBody2D" parent="."]
+position = Vector2(576, 324)
+mass = 0.553
 physics_material_override = SubResource("PhysicsMaterial_utmbd")
 gravity_scale = 0.0
-linear_damp_mode = 1
 angular_damp_mode = 1
-script = ExtResource("1_kt6q2")
 
-[node name="Icon" type="Sprite2D" parent="RigidBody2D"]
+[node name="Icon" type="Sprite2D" parent="toast"]
 scale = Vector2(2, 2)
 texture = ExtResource("1_1l4dl")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RigidBody2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="toast"]
 polygon = PackedVector2Array(-18, -28, 10, -28, 35, -32, 46, -18, 46, 0, 34, 24, 34, 48, -32, 48, -32, 16, -48, 2, -48, -16, -28, -34)
-
-[node name="Label" type="Label" parent="RigidBody2D"]
-offset_left = 47.0
-offset_top = -50.0
-offset_right = 160.0
-offset_bottom = -27.0
-pivot_offset = Vector2(-47, 50)
 
 [node name="ColorRect" type="ColorRect" parent="."]
 visible = false
 material = SubResource("ShaderMaterial_d8xs1")
-offset_left = 1.0
-offset_top = 1.0
-offset_right = 17.0
-offset_bottom = 10.0
+offset_top = -2893.0
+offset_right = 16.0
+offset_bottom = -2843.8
 scale = Vector2(72, 72)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(-10, 324)
+position = Vector2(-10, -1122.5)
 shape = SubResource("RectangleShape2D_tnoqe")
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
-position = Vector2(576, -10)
+position = Vector2(576, -2903)
 shape = SubResource("RectangleShape2D_oq1at")
 
 [node name="StaticBody2D3" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
-position = Vector2(1162, 324)
+position = Vector2(1162, -1122.5)
 shape = SubResource("RectangleShape2D_bo7f5")
 
 [node name="StaticBody2D4" type="StaticBody2D" parent="."]
@@ -119,3 +121,15 @@ shape = SubResource("RectangleShape2D_bo7f5")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4"]
 position = Vector2(576, 658)
 shape = SubResource("RectangleShape2D_v7gx7")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="speedLabel" type="Label" parent="HUD"]
+offset_left = 21.0
+offset_top = 19.0
+offset_right = 134.0
+offset_bottom = 42.0
+pivot_offset = Vector2(-47, 50)
+
+[node name="ProgressBar" parent="HUD" instance=ExtResource("2_qlfrv")]
+position = Vector2(12, 156)
