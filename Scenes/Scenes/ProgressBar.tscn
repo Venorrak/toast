@@ -8,17 +8,14 @@ script = ExtResource("1_pyfsv")
 [node name="top" type="Line2D" parent="."]
 points = PackedVector2Array(0, 0, 50, 0)
 width = 4.0
-default_color = Color(0, 0, 0, 1)
 
 [node name="bottom" type="Line2D" parent="."]
 points = PackedVector2Array(0, 300, 50, 300)
 width = 4.0
-default_color = Color(0, 0, 0, 1)
 
 [node name="center" type="Line2D" parent="."]
 points = PackedVector2Array(25, 0, 25, 300)
 width = 4.0
-default_color = Color(0, 0, 0, 1)
 
 [node name="status" type="Line2D" parent="."]
 width = 4.0

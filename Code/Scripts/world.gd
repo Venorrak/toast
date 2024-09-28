@@ -19,7 +19,9 @@ var incertancy: float = 0.0
 var QTEScene : PackedScene = preload("res://Scenes/Scenes/qte.tscn")
 @onready var toastStartPosition: Vector2 = $toast.global_position
 
-enum gameState {DIRECTION, POWER, THROW}
+var variationPercentage : float = 10 #if you change don't forget to change in qte.gd too
+
+enum gameState {DIRECTION, POWER, THROW, WAITING}
 var state = gameState.DIRECTION
 
 # Called when the node enters the scene tree for the first time.
@@ -44,36 +46,37 @@ func _physics_process(delta: float) -> void:
 		arrow.rotation_degrees += rotationSpeed
 		if arrow.rotation_degrees >= 90 or arrow.rotation_degrees <= -90:
 			rotationSpeed *= -1
-	if Input.is_action_just_pressed("stopArrow"):
-		if state == gameState.DIRECTION:
-			rotationSpeed = 0
-			gauge.visible = true
-			state = gameState.POWER
-	if Input.is_action_just_pressed("throw"):
-		if state == gameState.THROW:
-			var vector = getdirectionVector()
-			vector *= toastSpeed
-			toast.linear_velocity = vector
-			arrow.visible = false
-			gauge.visible = false
-	if Input.is_action_just_pressed("stopGauge"):
-		if state == gameState.POWER:
-			toastSpeed = gauge.value
-			gaugeSpeed = 0
-			var minigame = QTEScene.instantiate()
-			minigame.connect("_minigame_finished", minigameFinished)
-			HUD.add_child(minigame)
-		
-	if Input.is_action_just_pressed("results"):
-		var dist = target.position - toast.position
-		print(dist.length())
+	if Input.is_action_just_pressed("interact"):
+		match state:
+			gameState.DIRECTION:
+				rotationSpeed = 0
+				gauge.visible = true
+				state = gameState.POWER
+			gameState.THROW:
+				var vector = getdirectionVector()
+				vector *= toastSpeed
+				toast.linear_velocity = vector
+				arrow.visible = false
+				gauge.visible = false
+				state = gameState.WAITING
+			gameState.POWER:
+				toastSpeed = gauge.value
+				gaugeSpeed = 0
+				var minigame = QTEScene.instantiate()
+				minigame.connect("_minigame_finished", minigameFinished)
+				HUD.add_child(minigame)
+				state = gameState.WAITING
 
 func getdirectionVector():
 	var delta = aim.global_position - arrow.global_position
 	return delta.normalized()
 	
 func minigameFinished(scene):
-	incertancy = scene.getScore()
+	incertancy = variationPercentage - scene.getScore()
+	print(incertancy)
+	var tenPercentOfPower = (variationPercentage * maxSpeed) / 100
+	incertancy = (incertancy * tenPercentOfPower) / variationPercentage
+	print(incertancy)
 	toastSpeed = randf_range(toastSpeed - incertancy, toastSpeed + incertancy)
 	scene.queue_free()
 	state = gameState.THROW
