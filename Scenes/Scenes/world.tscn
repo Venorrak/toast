@@ -34,7 +34,7 @@ size = Vector2(1152, 20)
 script = ExtResource("1_kv0b3")
 rotationSpeed = 1.5
 gaugeSpeed = 10.0
-maxSpeed = 1400
+maxSpeed = 1500
 maxZoomCamera = 0.3
 
 [node name="background" type="ColorRect" parent="."]
@@ -100,9 +100,10 @@ scale = Vector2(2, 2)
 texture = ExtResource("1_1l4dl")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="toast"]
-polygon = PackedVector2Array(-18, -28, 10, -28, 35, -32, 46, -18, 46, 0, 34, 24, 34, 48, -32, 48, -32, 16, -48, 2, -48, -16, -28, -34)
+polygon = PackedVector2Array(34, 24, 34, 41, 28, 48, -26, 48, -32, 42, -32, 16, -40, 10, -48, 2, -48, -16, -46, -22, -28, -34, -22, -34, -18, -32, -18, -28, 10, -28, 14, -34, 22, -34, 36, -32, 46, -18, 46, 0, 44, 8, 38, 12)
 
 [node name="Shader" type="ColorRect" parent="."]
+visible = false
 material = SubResource("ShaderMaterial_d8xs1")
 offset_top = -2893.0
 offset_right = 16.0

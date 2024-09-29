@@ -73,10 +73,8 @@ func getdirectionVector():
 	
 func minigameFinished(scene):
 	incertancy = variationPercentage - scene.getScore()
-	print(incertancy)
 	var tenPercentOfPower = (variationPercentage * maxSpeed) / 100
 	incertancy = (incertancy * tenPercentOfPower) / variationPercentage
-	print(incertancy)
 	toastSpeed = randf_range(toastSpeed - incertancy, toastSpeed + incertancy)
 	scene.queue_free()
 	state = gameState.THROW

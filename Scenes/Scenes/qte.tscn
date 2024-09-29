@@ -22,7 +22,7 @@ Panel/styles/panel = SubResource("StyleBoxFlat_6n3n2")
 
 [node name="Qte" type="Node2D"]
 script = ExtResource("1_hesyt")
-nbOfQTE = 1
+nbOfQTE = 10
 safeSpace = 50.0
 QTESpeed = 5.0
 separationSpace = 75
