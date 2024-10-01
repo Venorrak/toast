@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://caykmy7xsnmvw" path="res://Rescources/2d/arrow.png" id="5_8mnj4"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_utmbd"]
-bounce = 0.9
+bounce = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_d8xs1"]
 shader = ExtResource("2_8ru73")
