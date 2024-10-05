@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6sp8nlbw614f"]
+
+[ext_resource type="Texture2D" uid="uid://bkowr3t32fkn4" path="res://Rescources/2d/toast.png" id="1_fxcxw"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_utmbd"]
+bounce = 0.9
+
+[node name="toast" type="RigidBody2D"]
+position = Vector2(576, 324)
+mass = 0.5
+physics_material_override = SubResource("PhysicsMaterial_utmbd")
+gravity_scale = 0.0
+linear_damp = 0.1
+
+[node name="Icon" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("1_fxcxw")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(34, 24, 34, 41, 28, 48, -26, 48, -32, 42, -32, 16, -40, 10, -48, 2, -48, -16, -46, -22, -28, -34, -22, -34, -18, -32, -18, -28, 10, -28, 14, -34, 22, -34, 36, -32, 46, -18, 46, 0, 44, 8, 38, 12)

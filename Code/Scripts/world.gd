@@ -3,6 +3,7 @@ extends Node2D
 @onready var aim = $Arrow/Aim
 @onready var toast = $toast
 @onready var gauge = $Control/TextureProgressBar
+@onready var gaugeLabel = $Control/RichTextLabel
 @onready var target = $Target
 @onready var camera = $Camera2D
 @onready var progressBar = $HUD/ProgressBar
@@ -30,11 +31,14 @@ func _ready() -> void:
 	gauge.max_value = maxSpeed
 	gauge.step = maxSpeed / 100
 	gauge.visible = false
+	gaugeLabel.visible = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	updateCamera()
+	if toast.linear_velocity.y > 0 && arrow.visible == true:
+		arrow.visible = false
 	
 	speedLabel.text = str(toast.linear_velocity.length())
 	
@@ -42,6 +46,7 @@ func _physics_process(delta: float) -> void:
 		gauge.value += gaugeSpeed
 		if gauge.value >= maxSpeed or gauge.value <= minSpeed:
 			gaugeSpeed *= -1
+		ShowOnGaugeLabel(int((gauge.value * 100) / maxSpeed))
 	if rotationSpeed != 0:
 		arrow.rotation_degrees += rotationSpeed
 		if arrow.rotation_degrees >= 90 or arrow.rotation_degrees <= -90:
@@ -51,13 +56,16 @@ func _physics_process(delta: float) -> void:
 			gameState.DIRECTION:
 				rotationSpeed = 0
 				gauge.visible = true
+				gaugeLabel.visible = true
 				state = gameState.POWER
 			gameState.THROW:
 				var vector = getdirectionVector()
 				vector *= toastSpeed
+				toast.look_at(vector)
+				toast.rotation += 90
 				toast.linear_velocity = vector
-				arrow.visible = false
 				gauge.visible = false
+				gaugeLabel.visible = false
 				state = gameState.WAITING
 			gameState.POWER:
 				toastSpeed = gauge.value
@@ -73,12 +81,23 @@ func getdirectionVector():
 	
 func minigameFinished(scene):
 	incertancy = variationPercentage - scene.getScore()
+	ShowOnGaugeLabel(int((gauge.value * 100) / maxSpeed), incertancy)
 	var tenPercentOfPower = (variationPercentage * maxSpeed) / 100
 	incertancy = (incertancy * tenPercentOfPower) / variationPercentage
 	toastSpeed = randf_range(toastSpeed - incertancy, toastSpeed + incertancy)
 	scene.queue_free()
 	state = gameState.THROW
-	
+
+func ShowOnGaugeLabel(percentage: int, incertancy : float = 0) -> void:
+	var newString = "[center]"
+	if incertancy != 0:
+		newString += '[shake rate=' + str(incertancy * 1.5) + ' level=' + str(5 + incertancy / 2) + ' connected=1]'
+	newString += str(percentage) + '%'
+	if incertancy != 0:
+		newString += ' ±' + str(incertancy) + '[/shake]'
+	newString += '[/center]'
+	gaugeLabel.text = newString
+
 func updateCamera():
 	camera.position.y = toast.position.y
 	if toast.position.y < target.position.y:
@@ -100,6 +119,9 @@ func updateCamera():
 	
 	if percent < 0:
 		percent = 0
+		
+	#apply ease out
+	percent = ease(percent / 100, 0.4) * 100
 	
 	var zoomValue = 1 - ((percent * (1 - maxZoomCamera)) / 100)
 	camera.zoom = Vector2(zoomValue, zoomValue)

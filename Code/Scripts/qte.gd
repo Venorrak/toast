@@ -9,6 +9,8 @@ signal _minigame_finished
 @export var topY: int
 
 @onready var Goals = $Goals
+@onready var timer = $StartQte
+@onready var AnimStateMachine = $AnimationTree.get("parameters/playback")
 var qteObj = preload("res://Scenes/Scenes/qteObj.tscn")
 
 var QTEs = []
@@ -56,11 +58,12 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if QTEAtIndex >= nbOfQTE:
-		_minigame_finished.emit(self)
+		AnimStateMachine.travel("exitScreen")
 	for qte in QTEs:
 		if GoalsY - qte.position.y < safeSpace:
-			qte.modulate = Color("ffffff", 0.5)
-		if qte.position.y - GoalsY > safeSpace:
+			qte.modulate = Color("ffd559", 1)
+		if qte.position.y - GoalsY > safeSpace / 2:
+			showGoalResult(false, qte.getType())
 			qte.reset()
 			qte.setEnabled(false)
 			QTEAtIndex += 1
@@ -68,10 +71,12 @@ func _physics_process(delta: float) -> void:
 		if Input.is_action_just_pressed(type):
 			if QTEAtIndex < nbOfQTE:
 				if QTEs[QTEAtIndex].visible == true:
-					QTEs[QTEAtIndex].visible = false
+					var youGotIt : bool = false
 					if QTEs[QTEAtIndex].getType() == type:
 						if GoalsY - QTEs[QTEAtIndex].position.y < safeSpace:
 							nbOfRight += 1
+							youGotIt = true
+					showGoalResult(youGotIt, QTEs[QTEAtIndex].getType())
 					QTEs[QTEAtIndex].reset()
 					QTEs[QTEAtIndex].setEnabled(false)
 					QTEAtIndex += 1
@@ -82,6 +87,19 @@ func _on_start_qte_timeout() -> void:
 			QTEs[QTEIndex].visible = true
 			QTEs[QTEIndex].setSpeed(QTESpeed)
 			QTEIndex += 1
-		
+
+func showGoalResult(gotIt : bool, qteType: String) -> void:
+	#seach types array for index corresponding to qteType
+	for i in range(len(types)):
+		if types[i] == qteType:
+			Goals.get_children()[i].startAnim(gotIt)
+	pass
+
 func getScore() -> float:
 	return (nbOfRight * 10) / nbOfQTE
+	
+func startTimer() -> void:
+	timer.start()
+
+func emitGameEnd() -> void:
+	_minigame_finished.emit(self)

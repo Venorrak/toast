@@ -1,15 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://dscos81yscrql"]
+[gd_scene load_steps=5 format=3 uid="uid://dscos81yscrql"]
 
 [ext_resource type="Script" path="res://Code/Scripts/progress_bar.gd" id="1_pyfsv"]
+[ext_resource type="Texture2D" uid="uid://yj4bge7r8eqy" path="res://Rescources/2d/target.png" id="2_cuhh0"]
+[ext_resource type="Texture2D" uid="uid://bkowr3t32fkn4" path="res://Rescources/2d/toast.png" id="2_kg4uw"]
+[ext_resource type="Texture2D" uid="uid://70fborerao6m" path="res://Rescources/2d/toaster.png" id="4_jrkgy"]
 
 [node name="ProgressBar" type="Node2D"]
 script = ExtResource("1_pyfsv")
 
 [node name="top" type="Line2D" parent="."]
+visible = false
 points = PackedVector2Array(0, 0, 50, 0)
 width = 4.0
 
 [node name="bottom" type="Line2D" parent="."]
+visible = false
 points = PackedVector2Array(0, 300, 50, 300)
 width = 4.0
 
@@ -17,6 +22,17 @@ width = 4.0
 points = PackedVector2Array(25, 0, 25, 300)
 width = 4.0
 
-[node name="status" type="Line2D" parent="."]
-width = 4.0
-default_color = Color(1, 0, 0, 1)
+[node name="Target" type="Sprite2D" parent="."]
+position = Vector2(25, 0)
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("2_cuhh0")
+
+[node name="status" type="Sprite2D" parent="."]
+position = Vector2(25, 0)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("2_kg4uw")
+
+[node name="Toaster" type="Sprite2D" parent="."]
+position = Vector2(25, 300)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("4_jrkgy")

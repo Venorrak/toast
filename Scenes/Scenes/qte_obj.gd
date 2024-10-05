@@ -15,10 +15,10 @@ func _physics_process(delta: float) -> void:
 func setSpeed(sped: float):
 	speed.y = sped
 
-func setType(newType: String):
+func setType(newType: String) -> void:
 	type = newType
 	
-func getType():
+func getType() -> String:
 	return type
 	
 func reset():

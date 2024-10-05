@@ -1,21 +1,18 @@
-[gd_scene load_steps=15 format=3 uid="uid://22f7y5815pvg"]
+[gd_scene load_steps=14 format=3 uid="uid://22f7y5815pvg"]
 
-[ext_resource type="Texture2D" uid="uid://bkowr3t32fkn4" path="res://Rescources/2d/toast.png" id="1_1l4dl"]
 [ext_resource type="Script" path="res://Code/Scripts/world.gd" id="1_kv0b3"]
 [ext_resource type="Texture2D" uid="uid://yj4bge7r8eqy" path="res://Rescources/2d/target.png" id="2_0hxpd"]
 [ext_resource type="Shader" path="res://Code/Shaders/pixelated.gdshader" id="2_8ru73"]
 [ext_resource type="Texture2D" uid="uid://ch0jv0psj74a0" path="res://Rescources/2d/progress_edge.png" id="2_b0wuk"]
 [ext_resource type="PackedScene" uid="uid://dscos81yscrql" path="res://Scenes/Scenes/ProgressBar.tscn" id="2_qlfrv"]
 [ext_resource type="Texture2D" uid="uid://uifcsn767y1l" path="res://Rescources/2d/progress_inside.png" id="3_ccj6t"]
-[ext_resource type="Texture2D" uid="uid://caykmy7xsnmvw" path="res://Rescources/2d/arrow.png" id="5_8mnj4"]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_utmbd"]
-bounce = 1.0
+[ext_resource type="PackedScene" uid="uid://c6sp8nlbw614f" path="res://Scenes/Scenes/toast.tscn" id="5_yr8ra"]
+[ext_resource type="Texture2D" uid="uid://70fborerao6m" path="res://Rescources/2d/toaster.png" id="6_5jxex"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_d8xs1"]
 shader = ExtResource("2_8ru73")
-shader_parameter/quantize_size = 3.0
-shader_parameter/handle_scale = true
+shader_parameter/quantize_size = 2.0
+shader_parameter/handle_scale = false
 shader_parameter/handle_subpixels = false
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tnoqe"]
@@ -80,30 +77,27 @@ fill_mode = 3
 texture_under = ExtResource("2_b0wuk")
 texture_progress = ExtResource("3_ccj6t")
 
+[node name="RichTextLabel" type="RichTextLabel" parent="Control"]
+layout_mode = 0
+offset_left = -15.0
+offset_top = -23.845
+offset_right = 58.86
+offset_bottom = 24.455
+bbcode_enabled = true
+text = "[center]100%[/center]"
+scroll_active = false
+
+[node name="toast" parent="." instance=ExtResource("5_yr8ra")]
+
 [node name="Arrow" type="Sprite2D" parent="."]
-position = Vector2(576, 496)
-scale = Vector2(2, 2)
-texture = ExtResource("5_8mnj4")
+position = Vector2(576, 327)
+scale = Vector2(0.98, 0.98)
+texture = ExtResource("6_5jxex")
 
 [node name="Aim" type="Node2D" parent="Arrow"]
-position = Vector2(-0.5, -25)
-
-[node name="toast" type="RigidBody2D" parent="."]
-position = Vector2(576, 324)
-mass = 0.5
-physics_material_override = SubResource("PhysicsMaterial_utmbd")
-gravity_scale = 0.0
-linear_damp = 0.1
-
-[node name="Icon" type="Sprite2D" parent="toast"]
-scale = Vector2(2, 2)
-texture = ExtResource("1_1l4dl")
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="toast"]
-polygon = PackedVector2Array(34, 24, 34, 41, 28, 48, -26, 48, -32, 42, -32, 16, -40, 10, -48, 2, -48, -16, -46, -22, -28, -34, -22, -34, -18, -32, -18, -28, 10, -28, 14, -34, 22, -34, 36, -32, 46, -18, 46, 0, 44, 8, 38, 12)
+position = Vector2(-0.5, -65)
 
 [node name="Shader" type="ColorRect" parent="."]
-visible = false
 material = SubResource("ShaderMaterial_d8xs1")
 offset_top = -2893.0
 offset_right = 16.0
