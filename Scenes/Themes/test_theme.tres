@@ -1,0 +1,34 @@
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://uqchl56daju3"]
+
+[ext_resource type="StyleBox" uid="uid://ks1bwdle5lru" path="res://Scenes/Themes/test_panel_theme.tres" id="1_x0ueb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4fgx0"]
+bg_color = Color(0.1, 0.1, 0.1, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.45, 0.45, 0.45, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+shadow_color = Color(0, 0, 0, 0.498039)
+shadow_size = 2
+shadow_offset = Vector2(3, 3)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_ekc4m"]
+color = Color(0.2, 0.2, 0.2, 1)
+thickness = 2
+
+[resource]
+default_font_size = 22
+Button/styles/normal = SubResource("StyleBoxFlat_4fgx0")
+HBoxContainer/constants/separation = 19
+HSeparator/styles/separator = SubResource("StyleBoxLine_ekc4m")
+Panel/styles/panel = ExtResource("1_x0ueb")

@@ -21,7 +21,7 @@ func setType(newType: String) -> void:
 func getType() -> String:
 	return type
 	
-func reset():
+func reset() -> void:
 	position = Vector2(0,0)
 	speed.y = 0
 	visible = false
