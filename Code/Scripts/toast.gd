@@ -1,12 +1,15 @@
 extends RigidBody2D
 var toastTeam: int
+var collision
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	pass
+
+func _physics_process(delta: float) -> void:
+	collision = move_and_collide(Vector2(0, 0), true)
 	pass
 
 func setTeam(team : int) -> void:
@@ -19,3 +22,13 @@ func setTeam(team : int) -> void:
 func getTeam() -> int:
 	return toastTeam
 	
+
+
+func _on_body_shape_entered(body_rid: RID, body: Node, body_shape_index: int, local_shape_index: int) -> void:
+	if linear_velocity.length() > 150:
+		if collision != null:
+			var newPosition = collision.get_position()
+			$GPUParticles2D.global_position = newPosition
+		else:
+			$GPUParticles2D.position = Vector2(0, 0)
+		$GPUParticles2D.emitting = true

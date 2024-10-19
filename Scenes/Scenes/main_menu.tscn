@@ -1,0 +1,75 @@
+[gd_scene load_steps=5 format=3 uid="uid://blcbbps2v7mab"]
+
+[ext_resource type="Script" path="res://Code/Scripts/main_menu.gd" id="1_cg3m7"]
+[ext_resource type="Shader" path="res://Code/Shaders/background.gdshader" id="1_opprs"]
+[ext_resource type="Texture2D" uid="uid://dryay04ljkfi0" path="res://Rescources/2d/icon.svg" id="2_1gqkb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nfa6p"]
+shader = ExtResource("1_opprs")
+shader_parameter/polar_coordinates = false
+shader_parameter/polar_center = Vector2(0.5, 0.5)
+shader_parameter/polar_zoom = 1.0
+shader_parameter/polar_repeat = 1.0
+shader_parameter/spin_rotation = null
+shader_parameter/spin_speed = 5.0
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/colour_1 = Color(0.86, 0.215, 0.22575, 1)
+shader_parameter/colour_2 = Color(0.09, 0.347833, 1, 1)
+shader_parameter/colour_3 = Color(0, 0, 0, 1)
+shader_parameter/contrast = 2.0
+shader_parameter/spin_amount = 0.36
+shader_parameter/pixel_filter = 500.0
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cg3m7")
+
+[node name="background" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_nfa6p")
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="Title" type="RichTextLabel" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = 27.0
+offset_top = 24.0
+offset_right = 602.0
+offset_bottom = 129.0
+theme_override_font_sizes/normal_font_size = 60
+bbcode_enabled = true
+text = "[fill][center]Yes, No, Toaster ?[/center][/fill]"
+
+[node name="PlayButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 62.0
+offset_top = 126.0
+offset_right = 190.0
+offset_bottom = 254.0
+texture_normal = ExtResource("2_1gqkb")
+
+[node name="OptionsButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 66.0
+offset_top = 270.0
+offset_right = 194.0
+offset_bottom = 398.0
+texture_normal = ExtResource("2_1gqkb")
+
+[node name="QuitButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 67.0
+offset_top = 412.0
+offset_right = 195.0
+offset_bottom = 540.0
+texture_normal = ExtResource("2_1gqkb")
+
+[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]

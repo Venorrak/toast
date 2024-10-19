@@ -175,7 +175,7 @@ transitions = ["Start", "RESET", SubResource("AnimationNodeStateMachineTransitio
 script = ExtResource("1_hesyt")
 nbOfQTE = 10
 safeSpace = 110.0
-QTESpeed = 10.0
+QTESpeed = 12.0
 separationSpace = 75
 GoalsY = 550
 topY = 70
@@ -212,7 +212,7 @@ rotation = 1.5708
 texture = ExtResource("4_kg3bw")
 
 [node name="StartQte" type="Timer" parent="."]
-wait_time = 0.8
+wait_time = 0.5
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

@@ -1,10 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://c6sp8nlbw614f"]
+[gd_scene load_steps=7 format=3 uid="uid://c6sp8nlbw614f"]
 
 [ext_resource type="Shader" path="res://Code/Shaders/highlight.gdshader" id="1_8jusr"]
 [ext_resource type="Script" path="res://Code/Scripts/toast.gd" id="1_bvevc"]
 [ext_resource type="Texture2D" uid="uid://bkowr3t32fkn4" path="res://Rescources/2d/toast.png" id="1_fxcxw"]
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_utmbd"]
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_f8uda"]
 bounce = 0.9
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7cgeh"]
@@ -14,11 +14,32 @@ shader_parameter/outline_color = Color(1, 0, 0, 1)
 shader_parameter/progress = 1.0
 shader_parameter/width = 0.025
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qdnof"]
+lifetime_randomness = 0.4
+particle_flag_disable_z = true
+particle_flag_damping_as_friction = true
+angle_min = -720.0
+angle_max = 720.0
+spread = 180.0
+initial_velocity_min = 100.0
+initial_velocity_max = 200.0
+angular_velocity_min = -200.0
+angular_velocity_max = 200.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.2
+scale_max = 0.5
+turbulence_noise_strength = 13.84
+collision_mode = 1
+collision_friction = 0.51
+collision_bounce = 1.0
+
 [node name="toast" type="RigidBody2D"]
 position = Vector2(576, 324)
 mass = 0.5
-physics_material_override = SubResource("PhysicsMaterial_utmbd")
+physics_material_override = SubResource("PhysicsMaterial_f8uda")
 gravity_scale = 0.0
+contact_monitor = true
+max_contacts_reported = 1
 linear_damp = 0.1
 script = ExtResource("1_bvevc")
 
@@ -30,3 +51,14 @@ texture = ExtResource("1_fxcxw")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 visible = false
 polygon = PackedVector2Array(34, 24, 34, 41, 28, 48, -26, 48, -32, 42, -32, 16, -40, 10, -48, 2, -48, -16, -46, -22, -28, -34, -22, -34, -18, -32, -18, -28, 10, -28, 14, -34, 22, -34, 36, -32, 46, -18, 46, 0, 44, 8, 38, 12)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_qdnof")
+texture = ExtResource("1_fxcxw")
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 60
+collision_base_size = 10.0
+
+[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]

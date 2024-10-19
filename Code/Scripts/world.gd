@@ -5,6 +5,7 @@ var toast
 @export var ValidToastDistance: float
 var nbOfToasts = 6
 @onready var toastHome = $Toasts
+@onready var trailHome = $Trails
 @onready var gauge = $Control/TextureProgressBar
 @onready var gaugeLabel = $Control/RichTextLabel
 @onready var target = $Target
@@ -26,6 +27,7 @@ var incertancy: float = 0.0
 var QTEScene : PackedScene = preload("res://Scenes/Scenes/qte.tscn")
 var ToastScene : PackedScene = preload("res://Scenes/Scenes/toast.tscn")
 var ResultsScene : PackedScene = preload("res://Scenes/Scenes/resultsScreen.tscn")
+var TrailScene : PackedScene = preload("res://Scenes/Scenes/trail.tscn")
 @onready var toastStartPosition: Vector2 = $Arrow.position
 
 var variationPercentage : float = 10 #if you change don't forget to change in qte.gd too
@@ -47,6 +49,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
+	updateTrails()
 	updateCamera()
 	if toast.linear_velocity.y > 0 && arrow.visible == true:
 		arrow.visible = false
@@ -177,5 +180,18 @@ func getCreateToast():
 	newToast.position = toastStartPosition
 	newToast.setTeam(nbOfToasts % 2 == 0)
 	toastHome.add_child(newToast)
+	createTrail(toastStartPosition)
 	toast = newToast
 	nbOfToasts -= 1
+
+func createTrail(startPoint: Vector2) -> void:
+	var newTrail = TrailScene.instantiate()
+	newTrail.add_point(startPoint)
+	trailHome.add_child(newTrail)
+
+func updateTrails() -> void:
+	var allToasts = toastHome.get_children()
+	var allTrails = trailHome.get_children()
+	for i in allToasts.size():
+		if (allToasts[i].global_position - allTrails[i].points[-1]).length() > 5:
+			allTrails[i].add_point(allToasts[i].global_position)

@@ -88,6 +88,8 @@ bbcode_enabled = true
 text = "[center]100%+10[/center]"
 scroll_active = false
 
+[node name="Trails" type="Node2D" parent="."]
+
 [node name="Toasts" type="Node2D" parent="."]
 
 [node name="Arrow" type="Sprite2D" parent="."]

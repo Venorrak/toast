@@ -25,7 +25,7 @@ func updateRedScore(Score) -> void:
 
 
 func _on_main_menu_btn_pressed() -> void:
-	get_tree().quit()
+	get_tree().change_scene_to_file("res://Scenes/Scenes/main_menu.tscn")
 
 
 func _on_new_game_btn_pressed() -> void:
