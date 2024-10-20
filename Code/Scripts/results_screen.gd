@@ -6,6 +6,7 @@ var redScores
 var blueScores
 
 func _ready() -> void:
+	$Control/mainMenuBtn.grab_focus()
 	var blues = BlueLabels.get_children()
 	for i in blues.size():
 		blues[i].text = str(blueScores[i])

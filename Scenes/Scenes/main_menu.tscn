@@ -1,8 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://blcbbps2v7mab"]
+[gd_scene load_steps=12 format=3 uid="uid://blcbbps2v7mab"]
 
 [ext_resource type="Script" path="res://Code/Scripts/main_menu.gd" id="1_cg3m7"]
 [ext_resource type="Shader" path="res://Code/Shaders/background.gdshader" id="1_opprs"]
-[ext_resource type="Texture2D" uid="uid://dryay04ljkfi0" path="res://Rescources/2d/icon.svg" id="2_1gqkb"]
+[ext_resource type="Texture2D" uid="uid://3fhjqo2ic8yt" path="res://Rescources/2d/play-button.png" id="3_l17b2"]
+[ext_resource type="Texture2D" uid="uid://cdqt27dnovwt7" path="res://Rescources/2d/play-button-pressed.png" id="4_t1chk"]
+[ext_resource type="Texture2D" uid="uid://11mbnb1c0k2q" path="res://Rescources/2d/play-button-fucus.png" id="5_qf5vr"]
+[ext_resource type="Texture2D" uid="uid://cuk68o2kqr0j7" path="res://Rescources/2d/options-button.png" id="6_uj4rp"]
+[ext_resource type="Texture2D" uid="uid://dvw0f74ecfxxw" path="res://Rescources/2d/options-button-pressed.png" id="7_iw05l"]
+[ext_resource type="Texture2D" uid="uid://dsrkpd0arj5fw" path="res://Rescources/2d/quit-button.png" id="8_vxlgh"]
+[ext_resource type="Texture2D" uid="uid://f7l5eu4dbave" path="res://Rescources/2d/quit-button-pressed.png" id="9_kc1n4"]
+[ext_resource type="Texture2D" uid="uid://cs1cwk87qxnf3" path="res://Rescources/2d/title.png" id="10_lbdb5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nfa6p"]
 shader = ExtResource("1_opprs")
@@ -36,40 +43,52 @@ offset_right = 1152.0
 offset_bottom = 648.0
 
 [node name="Title" type="RichTextLabel" parent="."]
+visible = false
 texture_filter = 1
 layout_mode = 0
 offset_left = 27.0
 offset_top = 24.0
 offset_right = 602.0
-offset_bottom = 129.0
+offset_bottom = 138.0
 theme_override_font_sizes/normal_font_size = 60
 bbcode_enabled = true
 text = "[fill][center]Yes, No, Toaster ?[/center][/fill]"
 
 [node name="PlayButton" type="TextureButton" parent="."]
 layout_mode = 0
-offset_left = 62.0
-offset_top = 126.0
-offset_right = 190.0
-offset_bottom = 254.0
-texture_normal = ExtResource("2_1gqkb")
+offset_left = 80.0
+offset_top = 170.0
+offset_right = 368.0
+offset_bottom = 266.0
+texture_normal = ExtResource("3_l17b2")
+texture_pressed = ExtResource("4_t1chk")
+texture_focused = ExtResource("5_qf5vr")
 
 [node name="OptionsButton" type="TextureButton" parent="."]
 layout_mode = 0
-offset_left = 66.0
+offset_left = 80.0
 offset_top = 270.0
-offset_right = 194.0
-offset_bottom = 398.0
-texture_normal = ExtResource("2_1gqkb")
+offset_right = 368.0
+offset_bottom = 366.0
+texture_normal = ExtResource("6_uj4rp")
+texture_pressed = ExtResource("7_iw05l")
+texture_focused = ExtResource("5_qf5vr")
 
 [node name="QuitButton" type="TextureButton" parent="."]
 layout_mode = 0
-offset_left = 67.0
-offset_top = 412.0
-offset_right = 195.0
-offset_bottom = 540.0
-texture_normal = ExtResource("2_1gqkb")
+offset_left = 80.0
+offset_top = 370.0
+offset_right = 368.0
+offset_bottom = 466.0
+texture_normal = ExtResource("8_vxlgh")
+texture_pressed = ExtResource("9_kc1n4")
+texture_focused = ExtResource("5_qf5vr")
 
-[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
-[connection signal="pressed" from="OptionsButton" to="." method="_on_options_button_pressed"]
-[connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(577, 117)
+scale = Vector2(1.59, 1.59)
+texture = ExtResource("10_lbdb5")
+
+[connection signal="button_up" from="PlayButton" to="." method="_on_play_button_button_up"]
+[connection signal="button_up" from="OptionsButton" to="." method="_on_options_button_button_up"]
+[connection signal="button_up" from="QuitButton" to="." method="_on_quit_button_button_up"]
