@@ -1,5 +1,6 @@
 extends Node2D
 signal _minigame_finished
+signal _animation_finished
 
 @export var nbOfQTE: int
 @export var safeSpace: float
@@ -8,16 +9,18 @@ signal _minigame_finished
 @export var GoalsY: int
 @export var topY: int
 
-@onready var Goals = $Goals
-@onready var timer = $StartQte
+@onready var Goals : Node2D = $Goals
+@onready var timer : Timer = $StartQte
 @onready var AnimStateMachine = $AnimationTree.get("parameters/playback")
-var qteObj = preload("res://Scenes/Scenes/qteObj.tscn")
 
-var QTEs = []
+var qteObj : PackedScene = preload("res://Scenes/Scenes/qteObj.tscn")
+
+var QTEs : Array = []
 var QTEIndex:int = 0
 var QTEAtIndex:int = 0
 var nbOfRight:int = 0
-var types = ["A", "B", "Up", "Down", "Left", "Right"]
+var types : Array = ["A", "B", "Up", "Down", "Left", "Right"]
+var gameEnded : bool = false
 
 func _ready() -> void:
 	Goals.position.y = GoalsY
@@ -28,8 +31,8 @@ func _ready() -> void:
 		
 	#create qtes
 	for i in nbOfQTE:
-		var newQTE = qteObj.instantiate()
-		var rand = randi_range(0,5)
+		var newQTE : Sprite2D = qteObj.instantiate()
+		var rand : int = randi_range(0,5)
 		match rand:
 			0:
 				newQTE.texture = load("res://Rescources/2d/AButton.png")
@@ -58,7 +61,10 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if QTEAtIndex >= nbOfQTE:
-		AnimStateMachine.travel("exitScreen")
+		if gameEnded == false:
+			gameEnded = true
+			_minigame_finished.emit(self)
+			AnimStateMachine.travel("exitScreen")
 	for qte in QTEs:
 		if GoalsY - qte.position.y < safeSpace:
 			qte.modulate = Color("ffd559", 1)
@@ -101,5 +107,5 @@ func getScore() -> float:
 func startTimer() -> void:
 	timer.start()
 
-func emitGameEnd() -> void:
-	_minigame_finished.emit(self)
+func emitAnimEnd() -> void:
+	_animation_finished.emit(self)

@@ -13,6 +13,6 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	pass
 
-func setProgress(percent: float):
+func setProgress(percent: float) -> void:
 	var height = (deltaTopBottom * (100 - percent)) / 100
 	status.position.y = height

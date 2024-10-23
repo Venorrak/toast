@@ -1,7 +1,7 @@
 extends Sprite2D
 @export var animDuration : float = 1
 
-@onready var timer = $Timer
+@onready var timer : Timer = $Timer
 
 var animColor : Color = Color("ffffff")
 # Called when the node enters the scene tree for the first time.
@@ -12,8 +12,8 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if timer.time_left != 0:
-		var darkenedValue = (animDuration - timer.time_left) / animDuration
-		var darkerColor = animColor.darkened(darkenedValue)
+		var darkenedValue : float = (animDuration - timer.time_left) / animDuration
+		var darkerColor : Color = animColor.darkened(darkenedValue)
 		modulate = darkerColor
 
 

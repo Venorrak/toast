@@ -12,7 +12,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	position += speed
 
-func setSpeed(sped: float):
+func setSpeed(sped: float) -> void:
 	speed.y = sped
 
 func setType(newType: String) -> void:
@@ -26,7 +26,7 @@ func reset() -> void:
 	speed.y = 0
 	visible = false
 
-func setEnabled(_enabled: bool):
+func setEnabled(_enabled: bool) -> void:
 	enabled = _enabled
 
 func getEnabled() -> bool:

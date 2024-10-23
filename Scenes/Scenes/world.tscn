@@ -92,12 +92,12 @@ scroll_active = false
 
 [node name="Toasts" type="Node2D" parent="."]
 
-[node name="Arrow" type="Sprite2D" parent="."]
+[node name="Toaster" type="Sprite2D" parent="."]
 position = Vector2(576, 327)
-scale = Vector2(0.98, 0.98)
+scale = Vector2(1.03, 1.03)
 texture = ExtResource("6_5jxex")
 
-[node name="Aim" type="Node2D" parent="Arrow"]
+[node name="Aim" type="Node2D" parent="Toaster"]
 position = Vector2(-0.5, -65)
 
 [node name="Shader" type="ColorRect" parent="."]

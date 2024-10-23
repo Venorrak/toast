@@ -1,6 +1,6 @@
 extends RigidBody2D
 var toastTeam: int
-var collision
+var collision : KinematicCollision2D
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
@@ -27,7 +27,7 @@ func getTeam() -> int:
 func _on_body_shape_entered(body_rid: RID, body: Node, body_shape_index: int, local_shape_index: int) -> void:
 	if linear_velocity.length() > 150:
 		if collision != null:
-			var newPosition = collision.get_position()
+			var newPosition : Vector2 = collision.get_position()
 			$GPUParticles2D.global_position = newPosition
 		else:
 			$GPUParticles2D.position = Vector2(0, 0)
