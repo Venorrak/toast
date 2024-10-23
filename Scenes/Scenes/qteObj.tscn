@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b31lw1pnhwx23"]
 
-[ext_resource type="Script" path="res://Scenes/Scenes/qte_obj.gd" id="1_irai7"]
+[ext_resource type="Script" path="res://Code/Scripts/qte_obj.gd" id="1_irai7"]
 
 [node name="QteObj" type="Sprite2D"]
 script = ExtResource("1_irai7")
