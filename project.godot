@@ -15,6 +15,14 @@ run/main_scene="res://Scenes/Scenes/main_menu.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://Rescources/2d/icon.svg"
 
+[autoload]
+
+EmbedGameAutoload="*res://addons/fabimakesgames.embed_game/embed_game_autoload.gd"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/fabimakesgames.embed_game/plugin.cfg")
+
 [input]
 
 interact={
