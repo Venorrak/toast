@@ -19,6 +19,10 @@ config/icon="res://Rescources/2d/icon.svg"
 
 EmbedGameAutoload="*res://addons/fabimakesgames.embed_game/embed_game_autoload.gd"
 
+[display]
+
+window/stretch/mode="canvas_items"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/fabimakesgames.embed_game/plugin.cfg")
