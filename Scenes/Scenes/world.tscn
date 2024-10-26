@@ -118,7 +118,6 @@ texture = ExtResource("6_5jxex")
 position = Vector2(-0.5, -65)
 
 [node name="Shader" type="ColorRect" parent="."]
-visible = false
 material = SubResource("ShaderMaterial_d8xs1")
 offset_top = -2893.0
 offset_right = 16.0
@@ -167,7 +166,6 @@ offset_top = 11.0
 offset_right = 1047.0
 offset_bottom = 170.0
 bbcode_enabled = true
-text = "[font_size=90]TEAM"
 
 [node name="Timer" type="Timer" parent="HUD/AnnouncementLabel"]
 one_shot = true
