@@ -7,7 +7,8 @@ extends Node2D
 @onready var gauge = $Control/TextureProgressBar
 @onready var gaugeLabel = $Control/RichTextLabel
 @onready var target = $Target
-@onready var camera = $Camera2D
+@onready var camera = $mainCamera
+@onready var globalCamera = $worldCamera
 @onready var progressBar = $HUD/ProgressBar
 @onready var speedLabel = $HUD/speedLabel
 @onready var anouncementLabel = $HUD/AnnouncementLabel
@@ -43,7 +44,7 @@ const PauseScene : PackedScene = preload("res://Scenes/Scenes/startMenu.tscn") #
 @export var maxSpeed: int # maximum speed of gauge and toast
 @export var maxZoomCamera: float # max UNzoom of the camera
 @export var trailFrequency : int = 5 # frequency in px at which the trail will create a new point
-@export var SHAKE_DECAY_RATE : float # rate at which the shake slows down
+@export_range(0, 1, 0.05) var SHAKE_DECAY_RATE : float # rate at which the shake slows down
 @export var nbOfBoost : int # number of boost pads
 @export var nbOfSlow : int # number of slow pads
 
@@ -57,10 +58,12 @@ func _ready() -> void:
 	gaugeLabel.visible = false
 	getCreateToast()
 	SpawnPads()
+	camera.make_current()
 
 func _physics_process(delta: float) -> void:
 	updateTrails()
 	updateCamera()
+	updateAltCamera()
 	updateGauge()
 	updateToaster()
 	if anouncementTimer.time_left == 0:
@@ -209,7 +212,17 @@ func updateGauge() -> void:
 	var deltaPosToastTargetY : float = target.position.y - toastStartPosition.y
 	progressBar.setProgress((100 - ((target.position.y - toast.position.y) * 100) / deltaPosToastTargetY))
 
+func updateAltCamera() -> void:
+	pass
+
 func updateCamera() -> void:
+	#camera change update
+	if Input.is_action_just_pressed("altView"):
+		globalCamera.make_current()
+	
+	if Input.is_action_just_released("altView"):
+		camera.make_current()
+	
 	camera.position.y = toast.position.y
 	if toast.position.y < target.position.y:
 		camera.position.y = target.position.y

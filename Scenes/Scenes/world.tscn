@@ -62,10 +62,14 @@ offset_bottom = 648.0
 scale = Vector2(1.00107, 1.00085)
 color = Color(0.646029, 0.646029, 0.646029, 1)
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="mainCamera" type="Camera2D" parent="."]
 position = Vector2(576, 324)
 process_callback = 0
 position_smoothing_enabled = true
+
+[node name="worldCamera" type="Camera2D" parent="."]
+position = Vector2(576, -1150)
+zoom = Vector2(0.175, 0.175)
 
 [node name="Target" type="Sprite2D" parent="."]
 position = Vector2(576, -2569)
