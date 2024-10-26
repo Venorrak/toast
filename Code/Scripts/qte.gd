@@ -13,14 +13,14 @@ signal _animation_finished # sent when the leaving animation is done
 @onready var timer : Timer = $StartQte
 @onready var AnimStateMachine = $AnimationTree.get("parameters/playback")
 
-var qteObj : PackedScene = preload("res://Scenes/Scenes/qteObj.tscn")
+const qteObj : PackedScene = preload("res://Scenes/Scenes/qteObj.tscn")
 
 var QTEs : Array = [] # list of the qtes
 var QTESpawnIndex : int = 0 # index of QTEs that the timer uses
 var QTEFocusIndex : int = 0 # index of the QTE being tracked for player input
 var nbOfRight : int = 0
 var miniGameEnded : bool = false
-var types : Array = ["A", "B", "Up", "Down", "Left", "Right"]
+const types : Array = ["A", "B", "Up", "Down", "Left", "Right"]
 var textures : Array = [
 	load("res://Rescources/2d/AButton.png"),
 	load("res://Rescources/2d/BButton.png"),

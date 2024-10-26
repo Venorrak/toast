@@ -1,6 +1,11 @@
 extends RigidBody2D
 var toastTeam: int
 var collision : KinematicCollision2D
+signal toastCollision
+var acceleration : float = 1
+
+@export var accelerationDecay : float
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
@@ -10,7 +15,8 @@ func _process(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	collision = move_and_collide(Vector2(0, 0), true)
-	pass
+	linear_velocity *= acceleration
+	acceleration = lerp(acceleration, 1.0, accelerationDecay)
 
 func setTeam(team : int) -> void:
 	toastTeam = team
@@ -32,3 +38,4 @@ func _on_body_shape_entered(body_rid: RID, body: Node, body_shape_index: int, lo
 		else:
 			$GPUParticles2D.position = Vector2(0, 0)
 		$GPUParticles2D.emitting = true
+		toastCollision.emit(linear_velocity.length() / 7)

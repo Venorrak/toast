@@ -1,12 +1,22 @@
-[gd_scene load_steps=13 format=3 uid="uid://22f7y5815pvg"]
+[gd_scene load_steps=15 format=3 uid="uid://22f7y5815pvg"]
 
 [ext_resource type="Script" path="res://Code/Scripts/world.gd" id="1_kv0b3"]
 [ext_resource type="Texture2D" uid="uid://yj4bge7r8eqy" path="res://Rescources/2d/target.png" id="2_0hxpd"]
 [ext_resource type="Shader" path="res://Code/Shaders/pixelated.gdshader" id="2_8ru73"]
 [ext_resource type="Texture2D" uid="uid://ch0jv0psj74a0" path="res://Rescources/2d/progress_edge.png" id="2_b0wuk"]
+[ext_resource type="Shader" path="res://Code/Shaders/backgroundGame.gdshader" id="2_lw4js"]
 [ext_resource type="PackedScene" uid="uid://dscos81yscrql" path="res://Scenes/Scenes/ProgressBar.tscn" id="2_qlfrv"]
 [ext_resource type="Texture2D" uid="uid://uifcsn767y1l" path="res://Rescources/2d/progress_inside.png" id="3_ccj6t"]
 [ext_resource type="Texture2D" uid="uid://70fborerao6m" path="res://Rescources/2d/toaster.png" id="6_5jxex"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_736u3"]
+shader = ExtResource("2_lw4js")
+shader_parameter/color_one = Color(0.1008, 0.56896, 0.84, 1)
+shader_parameter/color_two = Color(0.227909, 0.000188191, 0.698831, 1)
+shader_parameter/angle = 45.0
+shader_parameter/line_count = 56.705
+shader_parameter/speed = 0.115
+shader_parameter/blur = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_d8xs1"]
 shader = ExtResource("2_8ru73")
@@ -33,8 +43,12 @@ rotationSpeedInit = 3.0
 gaugeSpeedInit = 12.0
 maxSpeed = 1500
 maxZoomCamera = 0.3
+SHAKE_DECAY_RATE = 0.4
+nbOfBoost = 4
+nbOfSlow = 4
 
 [node name="background" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_736u3")
 offset_left = -4207.0
 offset_top = -5895.0
 offset_right = 5793.0
@@ -45,6 +59,7 @@ color = Color(0, 0, 0, 1)
 offset_top = -2893.0
 offset_right = 1152.0
 offset_bottom = 648.0
+scale = Vector2(1.00107, 1.00085)
 color = Color(0.646029, 0.646029, 0.646029, 1)
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -92,6 +107,8 @@ scroll_active = false
 
 [node name="Toasts" type="Node2D" parent="."]
 
+[node name="Pads" type="Node2D" parent="."]
+
 [node name="Toaster" type="Sprite2D" parent="."]
 position = Vector2(576, 327)
 scale = Vector2(1.03, 1.03)
@@ -101,33 +118,34 @@ texture = ExtResource("6_5jxex")
 position = Vector2(-0.5, -65)
 
 [node name="Shader" type="ColorRect" parent="."]
+visible = false
 material = SubResource("ShaderMaterial_d8xs1")
 offset_top = -2893.0
 offset_right = 16.0
 offset_bottom = -2843.8
 scale = Vector2(72, 72)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="LeftWall" type="StaticBody2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
 position = Vector2(-10, -1122.5)
 shape = SubResource("RectangleShape2D_tnoqe")
 
-[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+[node name="TopWall" type="StaticBody2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopWall"]
 position = Vector2(576, -2903)
 shape = SubResource("RectangleShape2D_oq1at")
 
-[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+[node name="RightWall" type="StaticBody2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
 position = Vector2(1162, -1122.5)
 shape = SubResource("RectangleShape2D_bo7f5")
 
-[node name="StaticBody2D4" type="StaticBody2D" parent="."]
+[node name="BottomWall" type="StaticBody2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomWall"]
 position = Vector2(576, 658)
 shape = SubResource("RectangleShape2D_v7gx7")
 
@@ -142,3 +160,14 @@ pivot_offset = Vector2(-47, 50)
 
 [node name="ProgressBar" parent="HUD" instance=ExtResource("2_qlfrv")]
 position = Vector2(12, 156)
+
+[node name="AnnouncementLabel" type="RichTextLabel" parent="HUD"]
+offset_left = 107.0
+offset_top = 11.0
+offset_right = 1047.0
+offset_bottom = 170.0
+bbcode_enabled = true
+text = "[font_size=90]TEAM"
+
+[node name="Timer" type="Timer" parent="HUD/AnnouncementLabel"]
+one_shot = true

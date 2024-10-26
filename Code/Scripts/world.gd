@@ -3,12 +3,15 @@ extends Node2D
 @onready var aim = $Toaster/Aim
 @onready var toastHome = $Toasts
 @onready var trailHome = $Trails
+@onready var PadHome = $Pads
 @onready var gauge = $Control/TextureProgressBar
 @onready var gaugeLabel = $Control/RichTextLabel
 @onready var target = $Target
 @onready var camera = $Camera2D
 @onready var progressBar = $HUD/ProgressBar
 @onready var speedLabel = $HUD/speedLabel
+@onready var anouncementLabel = $HUD/AnnouncementLabel
+@onready var anouncementTimer = $HUD/AnnouncementLabel/Timer
 @onready var HUD = $HUD
 
 @onready var toastStartPosition: Vector2 = $Toaster.position #position of toast at the start of the game
@@ -22,12 +25,16 @@ var incertancy: float = 0.0 # incertancy in % of the power output
 enum gameState {DIRECTION, POWER, THROW, WAITING, THROWN} # states of a toast, repeated (nbOfToasts) times
 var state = gameState.DIRECTION # start with choosing direction
 var variationPercentage : float = 10 # max variation of the power output. if you change don't forget to change in qte.gd too
-var gameEnded : bool = false
+var gameEnded : bool = false # is the game ended
+var shakeStrenght : float # strenght of shake
 
-var QTEScene : PackedScene = preload("res://Scenes/Scenes/qte.tscn") # guitart hero
-var ToastScene : PackedScene = preload("res://Scenes/Scenes/toast.tscn") # a toast
-var ResultsScene : PackedScene = preload("res://Scenes/Scenes/resultsScreen.tscn") # result screen
-var TrailScene : PackedScene = preload("res://Scenes/Scenes/trail.tscn") # butter trail of the toast
+const QTEScene : PackedScene = preload("res://Scenes/Scenes/qte.tscn") # guitart hero
+const ToastScene : PackedScene = preload("res://Scenes/Scenes/toast.tscn") # a toast
+const  ResultsScene : PackedScene = preload("res://Scenes/Scenes/resultsScreen.tscn") # result screen
+const TrailScene : PackedScene = preload("res://Scenes/Scenes/trail.tscn") # butter trail of the toast
+const BoostPadScene : PackedScene = preload("res://Scenes/Scenes/BoostPad.tscn") # BUTTER
+const SlowPadScene : PackedScene = preload("res://Scenes/Scenes/SlowPad.tscn") # JAM
+const PauseScene : PackedScene = preload("res://Scenes/Scenes/startMenu.tscn") # pause menu
 
 @export var ValidToastDistance: float # maximum distance from the target where the toast is valid / doesn't dissapear
 @export var rotationSpeedInit: float # rotation speed of toaster at start
@@ -36,6 +43,9 @@ var TrailScene : PackedScene = preload("res://Scenes/Scenes/trail.tscn") # butte
 @export var maxSpeed: int # maximum speed of gauge and toast
 @export var maxZoomCamera: float # max UNzoom of the camera
 @export var trailFrequency : int = 5 # frequency in px at which the trail will create a new point
+@export var SHAKE_DECAY_RATE : float # rate at which the shake slows down
+@export var nbOfBoost : int # number of boost pads
+@export var nbOfSlow : int # number of slow pads
 
 func _ready() -> void:
 	rotationSpeed = rotationSpeedInit
@@ -46,12 +56,15 @@ func _ready() -> void:
 	gauge.visible = false
 	gaugeLabel.visible = false
 	getCreateToast()
+	SpawnPads()
 
 func _physics_process(delta: float) -> void:
 	updateTrails()
 	updateCamera()
 	updateGauge()
 	updateToaster()
+	if anouncementTimer.time_left == 0:
+		updateAnnouncementLabel()
 	
 	#make toaster invisible if the toast goes back down
 	if toast.linear_velocity.y > 0 && toaster.visible == true:
@@ -80,6 +93,13 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("interact"):
 		InteractInput()
+	
+	if Input.is_action_just_pressed("pause"):
+		if Engine.time_scale != 0.0:
+			HUD.add_child(PauseScene.instantiate())
+
+func cameraShake(shake : float) -> void:
+	shakeStrenght = shake
 
 func gameEnding() -> void:
 	var redTeamScore : Array = []
@@ -159,6 +179,20 @@ func ShowOnGaugeLabel(percentage: int, incertancy : float = 0) -> void:
 	newString += '[/center]'
 	gaugeLabel.text = newString
 
+func ShowOnAnnouncementLabel(text : String, fontSize : int, color : Color = Color("#FFFFFF"), visibleTime : float = 3.0) -> void:
+	anouncementLabel.modulate = Color("#FFFFFF", 1)
+	anouncementTimer.start(visibleTime)
+	var newString : String = "[center][font_size=" + str(fontSize) + "][color=" + str(color.to_html(false)) + "]"
+	newString += text
+	newString += "[/color][/font_size][/center]"
+	anouncementLabel.text = newString
+
+func updateAnnouncementLabel() -> void:
+	var lastColor : Color = anouncementLabel.modulate
+	var newAlpha = lerp(lastColor.a, 0.0, 0.2)
+	lastColor.a = newAlpha
+	anouncementLabel.modulate = lastColor
+
 func updateToaster() -> void:
 	if rotationSpeed != 0:
 		toaster.rotation_degrees += rotationSpeed
@@ -182,9 +216,9 @@ func updateCamera() -> void:
 	if toast.position.y > toastStartPosition.y:
 		camera.position.y = toastStartPosition.y
 	var deltaPosToastTargetY : float = target.position.y - toastStartPosition.y
-	var middle = (deltaPosToastTargetY / 2) + toastStartPosition.y
-	var deltaToastMiddle = middle - toast.position.y
-	var percent
+	var middle : float = (deltaPosToastTargetY / 2) + toastStartPosition.y
+	var deltaToastMiddle : float = middle - toast.position.y
+	var percent : float
 	
 	if deltaToastMiddle < 0:
 		percent = ((toast.position.y - toastStartPosition.y) * 100) / (deltaPosToastTargetY / 2)
@@ -200,11 +234,23 @@ func updateCamera() -> void:
 	
 	var zoomValue : float = 1 - ((percent * (1 - maxZoomCamera)) / 100)
 	camera.zoom = Vector2(zoomValue, zoomValue)
+	
+	# camera shake part
+	shakeStrenght = lerp(shakeStrenght, 0.0, SHAKE_DECAY_RATE)
+	camera.offset = Vector2(
+		randf_range(-shakeStrenght, shakeStrenght),
+		randf_range(-shakeStrenght, shakeStrenght)
+	)
 
 func getCreateToast() -> void:
 	var newToast = ToastScene.instantiate()
 	newToast.position = toastStartPosition
 	newToast.setTeam(nbOfToasts % 2 == 0)
+	if nbOfToasts % 2 == 0 :
+		ShowOnAnnouncementLabel("Red Team", 90, Color("#FF0000"))
+	else:
+		ShowOnAnnouncementLabel("Blue Team", 90, Color("#0000FF"))
+	newToast.connect("toastCollision", cameraShake)
 	toastHome.add_child(newToast)
 	createTrail(toastStartPosition)
 	toast = newToast
@@ -222,3 +268,25 @@ func updateTrails() -> void:
 		if (allToasts[i].global_position - target.global_position).length() < 10000:
 			if (allToasts[i].global_position - allTrails[i].points[-1]).length() > 5:
 				allTrails[i].add_point(allToasts[i].global_position)
+
+func SpawnPads() -> void:
+	var leftBound : float = $LeftWall/CollisionShape2D.global_position.x + 30
+	var rightBound : float = $RightWall/CollisionShape2D.global_position.x - 30
+	var topBound : float = $TopWall/CollisionShape2D.global_position.y + 30
+	var downBound : float = $Toaster.global_position.y - 50
+	for i in nbOfBoost:
+		var newBoost = BoostPadScene.instantiate()
+		newBoost.global_position = Vector2(
+			randf_range(leftBound, rightBound),
+			randf_range(topBound, downBound)
+		)
+		PadHome.add_child(newBoost)
+	
+	for i in nbOfSlow:
+		var newSlow = SlowPadScene.instantiate()
+		newSlow.global_position = Vector2(
+			randf_range(leftBound, rightBound),
+			randf_range(topBound, downBound)
+		)
+		PadHome.add_child(newSlow)
+	
