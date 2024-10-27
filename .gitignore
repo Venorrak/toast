@@ -1,3 +1,4 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+addons/fabimakesgames.embed_game/bin/~embed_game.windows.template_debug.x86_64.dll
