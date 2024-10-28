@@ -16,6 +16,8 @@ extends Node2D
 @onready var HUD = $HUD
 
 @onready var toastStartPosition: Vector2 = $Toaster.position #position of toast at the start of the game
+@onready var worldCameraFinalPosition : Vector2 = $worldCamera.position
+@onready var worldCameraFinalZoom : Vector2 = $worldCamera.zoom
 
 var toast # current toast being controlled / followed
 var nbOfToasts = 6 # total number of toast for the game
@@ -213,15 +215,21 @@ func updateGauge() -> void:
 	progressBar.setProgress((100 - ((target.position.y - toast.position.y) * 100) / deltaPosToastTargetY))
 
 func updateAltCamera() -> void:
-	pass
+	if !Input.is_action_pressed("altView"):
+		if camera.global_position == globalCamera.global_position:
+			camera.make_current()
+		globalCamera.position = lerp(globalCamera.position, camera.position, 0.4)
+		globalCamera.zoom = lerp(globalCamera.zoom, camera.zoom, 0.1)
+	if Input.is_action_pressed("altView"):
+		globalCamera.position = lerp(globalCamera.position, worldCameraFinalPosition, 0.4)
+		globalCamera.zoom = lerp(globalCamera.zoom, worldCameraFinalZoom, 0.1)
+	
+		
 
 func updateCamera() -> void:
 	#camera change update
 	if Input.is_action_just_pressed("altView"):
 		globalCamera.make_current()
-	
-	if Input.is_action_just_released("altView"):
-		camera.make_current()
 	
 	camera.position.y = toast.position.y
 	if toast.position.y < target.position.y:

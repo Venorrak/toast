@@ -70,6 +70,7 @@ position_smoothing_enabled = true
 [node name="worldCamera" type="Camera2D" parent="."]
 position = Vector2(576, -1150)
 zoom = Vector2(0.175, 0.175)
+position_smoothing_enabled = true
 
 [node name="Target" type="Sprite2D" parent="."]
 position = Vector2(576, -2569)
