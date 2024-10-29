@@ -68,6 +68,7 @@ func _physics_process(delta: float) -> void:
 	updateAltCamera()
 	updateGauge()
 	updateToaster()
+	
 	if anouncementTimer.time_left == 0:
 		updateAnnouncementLabel()
 	
@@ -162,7 +163,7 @@ func InteractInput() -> void:
 func getThrowDirection() -> Vector2:
 	var delta : Vector2 = aim.global_position - toaster.global_position
 	return delta.normalized()
-	
+
 func minigameFinished(scene) -> void:
 	incertancy = variationPercentage - scene.getScore() # x/10 of incertaincy
 	ShowOnGaugeLabel(int((gauge.value * 100) / maxSpeed), incertancy)
@@ -215,21 +216,21 @@ func updateGauge() -> void:
 	progressBar.setProgress((100 - ((target.position.y - toast.position.y) * 100) / deltaPosToastTargetY))
 
 func updateAltCamera() -> void:
+	
+	if Input.is_action_just_pressed("altView"):
+		globalCamera.make_current()
+	
 	if !Input.is_action_pressed("altView"):
-		if camera.global_position == globalCamera.global_position:
+		if areVecEqual(camera.global_position, globalCamera.global_position, 0.005) and areVecEqual(camera.zoom, globalCamera.zoom, 0.005) and globalCamera.is_current():
 			camera.make_current()
 		globalCamera.position = lerp(globalCamera.position, camera.position, 0.4)
 		globalCamera.zoom = lerp(globalCamera.zoom, camera.zoom, 0.1)
+		
 	if Input.is_action_pressed("altView"):
 		globalCamera.position = lerp(globalCamera.position, worldCameraFinalPosition, 0.4)
 		globalCamera.zoom = lerp(globalCamera.zoom, worldCameraFinalZoom, 0.1)
-	
-		
 
 func updateCamera() -> void:
-	#camera change update
-	if Input.is_action_just_pressed("altView"):
-		globalCamera.make_current()
 	
 	camera.position.y = toast.position.y
 	if toast.position.y < target.position.y:
@@ -310,4 +311,9 @@ func SpawnPads() -> void:
 			randf_range(topBound, downBound)
 		)
 		PadHome.add_child(newSlow)
-	
+
+func areVecEqual(vec1 : Vector2, vec2 : Vector2, incertaincy : float) -> bool:
+	if vec1.x - vec2.x < incertaincy:
+		if vec1.y - vec2.y < incertaincy:
+			return true
+	return false

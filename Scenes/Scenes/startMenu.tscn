@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cqbub2tu8p1bs"]
+[gd_scene load_steps=10 format=3 uid="uid://cqbub2tu8p1bs"]
 
 [ext_resource type="Script" path="res://Code/Scripts/start_menu.gd" id="1_ovi72"]
 [ext_resource type="Texture2D" uid="uid://rqta1853o2am" path="res://Rescources/2d/mm-button.png" id="2_h6yc8"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cy3iv0d07y03p" path="res://Rescources/2d/restart-button-pressed.png" id="6_d31wk"]
 [ext_resource type="Texture2D" uid="uid://dsrkpd0arj5fw" path="res://Rescources/2d/quit-button.png" id="7_k3h4s"]
 [ext_resource type="Texture2D" uid="uid://f7l5eu4dbave" path="res://Rescources/2d/quit-button-pressed.png" id="8_0f31t"]
+[ext_resource type="Script" path="res://Code/Scripts/leave_game_script.gd" id="9_s2rhs"]
 
 [node name="StartMenu" type="Control"]
 layout_mode = 3
@@ -53,6 +54,9 @@ offset_bottom = 477.0
 texture_normal = ExtResource("7_k3h4s")
 texture_pressed = ExtResource("8_0f31t")
 texture_focused = ExtResource("4_gh1sp")
+
+[node name="LeaveGameScript" type="Node" parent="."]
+script = ExtResource("9_s2rhs")
 
 [connection signal="button_up" from="MainMenu" to="." method="_on_main_menu_button_up"]
 [connection signal="button_up" from="Restart" to="." method="_on_restart_button_up"]
