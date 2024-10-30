@@ -44,7 +44,7 @@ const PauseScene : PackedScene = preload("res://Scenes/Scenes/startMenu.tscn") #
 @export var gaugeSpeedInit: float # speed of power gauge at start 
 @export var minSpeed: int # minimum speed of gauge and toast
 @export var maxSpeed: int # maximum speed of gauge and toast
-@export var maxZoomCamera: float # max UNzoom of the camera
+@export_range(0, 1, 0.05) var maxZoomCamera: float # max UNzoom of the camera
 @export var trailFrequency : int = 5 # frequency in px at which the trail will create a new point
 @export_range(0, 1, 0.05) var SHAKE_DECAY_RATE : float # rate at which the shake slows down
 @export var nbOfBoost : int # number of boost pads
@@ -78,7 +78,7 @@ func _physics_process(delta: float) -> void:
 	
 	#speedLabel.text = str(toast.linear_velocity.length())
 	
-	if toast.linear_velocity.length() < 3 and state == gameState.THROWN:
+	if toast.linear_velocity.length() < 5 and state == gameState.THROWN:
 		#if the toast is further than the valid distance from the target
 		if (toast.global_position - target.global_position).length() > ValidToastDistance:
 			toast.position = Vector2(100000, 1000000) # no queue_free because of result screen resons
