@@ -10,6 +10,3 @@ func manage_end_game() -> void:
 	if is_on_arcade() :
 		if Input.is_action_pressed("hotkey") and Input.is_action_pressed("pause"):
 			get_tree().quit()
-	else :
-		if Input.is_action_just_pressed("pause"):
-			get_tree().quit()

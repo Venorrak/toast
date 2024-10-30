@@ -1,5 +1,5 @@
 extends Control
-
+signal restartGame
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -14,8 +14,10 @@ func _physics_process(delta: float) -> void:
 
 func _on_main_menu_button_up() -> void:
 	get_tree().change_scene_to_file("res://Scenes/Scenes/main_menu.tscn")
+	Engine.time_scale = 1.0
 
 func _on_restart_button_up() -> void:
+	Engine.time_scale = 1.0
 	get_tree().reload_current_scene()
 
 func _on_quit_button_up() -> void:
