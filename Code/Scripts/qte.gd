@@ -66,7 +66,6 @@ func _physics_process(delta: float) -> void:
 			miniGameEnded = true
 			_minigame_finished.emit(self)
 			AnimStateMachine.travel("exitScreen")
-			
 	
 	for qte in QTEs:
 		# change color based on if it is valid to press
@@ -79,7 +78,6 @@ func _physics_process(delta: float) -> void:
 			qte.setEnabled(false)
 			QTEFocusIndex += 1
 	
-	# "up" "down" etc
 	if !miniGameEnded:
 		for type in types:
 			if Input.is_action_just_pressed(type):
@@ -105,7 +103,7 @@ func _on_start_qte_timeout() -> void:
 		if QTEs[QTESpawnIndex].getEnabled() == true:
 			QTEs[QTESpawnIndex].visible = true
 			QTEs[QTESpawnIndex].setSpeed(QTESpeed)
-			QTESpawnIndex += 1
+		QTESpawnIndex += 1
 
 func showGoalResult(gotIt : bool, qteType: String) -> void:
 	#seach types array for index corresponding to qteType
