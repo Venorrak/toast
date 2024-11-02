@@ -18,6 +18,7 @@ config/icon="res://Rescources/2d/toast.png"
 [autoload]
 
 EmbedGameAutoload="*res://addons/fabimakesgames.embed_game/embed_game_autoload.gd"
+globalVars="*res://Code/Scripts/GlobalVars.gd"
 
 [display]
 

@@ -1,14 +1,27 @@
-[gd_scene load_steps=17 format=3 uid="uid://22f7y5815pvg"]
+[gd_scene load_steps=26 format=3 uid="uid://22f7y5815pvg"]
 
 [ext_resource type="Script" path="res://Code/Scripts/world.gd" id="1_kv0b3"]
 [ext_resource type="Texture2D" uid="uid://yj4bge7r8eqy" path="res://Rescources/2d/target.png" id="2_0hxpd"]
 [ext_resource type="Shader" path="res://Code/Shaders/pixelated.gdshader" id="2_8ru73"]
 [ext_resource type="Texture2D" uid="uid://ch0jv0psj74a0" path="res://Rescources/2d/progress_edge.png" id="2_b0wuk"]
+[ext_resource type="Script" path="res://Code/Scripts/state_machine.gd" id="2_lvsgn"]
 [ext_resource type="Shader" path="res://Code/Shaders/backgroundGame.gdshader" id="2_lw4js"]
 [ext_resource type="PackedScene" uid="uid://dscos81yscrql" path="res://Scenes/Scenes/ProgressBar.tscn" id="2_qlfrv"]
+[ext_resource type="Script" path="res://Code/Scripts/game_direction.gd" id="3_7bal0"]
 [ext_resource type="Texture2D" uid="uid://uifcsn767y1l" path="res://Rescources/2d/progress_inside.png" id="3_ccj6t"]
+[ext_resource type="Script" path="res://Code/Scripts/game_power.gd" id="4_vgxeg"]
+[ext_resource type="Script" path="res://Code/Scripts/game_throw.gd" id="5_6m2jq"]
 [ext_resource type="Texture2D" uid="uid://70fborerao6m" path="res://Rescources/2d/toaster.png" id="6_5jxex"]
+[ext_resource type="Script" path="res://Code/Scripts/game_waiting.gd" id="6_p3p0n"]
+[ext_resource type="Script" path="res://Code/Scripts/game_thrown.gd" id="7_aftpo"]
 [ext_resource type="Script" path="res://Code/Scripts/leave_game_script.gd" id="9_2gm1m"]
+[ext_resource type="Script" path="res://Code/Scripts/main_camera.gd" id="9_ehnhd"]
+[ext_resource type="Script" path="res://Code/Scripts/world_camera.gd" id="10_lqw7y"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_es3j4"]
+noise_type = 3
+frequency = 0.1
+fractal_type = 3
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_736u3"]
 shader = ExtResource("2_lw4js")
@@ -42,14 +55,48 @@ font_names = PackedStringArray("Trebuchet MS")
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_kv0b3")
-ValidToastDistance = 750.0
-rotationSpeedInit = 3.0
-gaugeSpeedInit = 12.0
-maxSpeed = 1500
-maxZoomCamera = 0.3
-SHAKE_DECAY_RATE = 0.4
+noise = SubResource("FastNoiseLite_es3j4")
 nbOfBoost = 4
 nbOfSlow = 4
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_lvsgn")
+initial_state = NodePath("GameDirection")
+
+[node name="GameDirection" type="Node" parent="StateMachine" node_paths=PackedStringArray("thisWorld", "gauge", "gaugeLabel", "toaster")]
+script = ExtResource("3_7bal0")
+thisWorld = NodePath("../..")
+gauge = NodePath("../../Control/TextureProgressBar")
+gaugeLabel = NodePath("../../Control/RichTextLabel")
+toaster = NodePath("../../Toaster")
+
+[node name="GamePower" type="Node" parent="StateMachine" node_paths=PackedStringArray("thisWorld", "HUD", "gauge", "target", "gaugeLabel")]
+script = ExtResource("4_vgxeg")
+thisWorld = NodePath("../..")
+HUD = NodePath("../../HUD")
+gauge = NodePath("../../Control/TextureProgressBar")
+target = NodePath("../../Target")
+gaugeLabel = NodePath("../../Control/RichTextLabel")
+
+[node name="GameThrow" type="Node" parent="StateMachine" node_paths=PackedStringArray("thisWorld", "toaster", "gauge", "gaugeLabel")]
+script = ExtResource("5_6m2jq")
+thisWorld = NodePath("../..")
+toaster = NodePath("../../Toaster")
+gauge = NodePath("../../Control/TextureProgressBar")
+gaugeLabel = NodePath("../../Control/RichTextLabel")
+
+[node name="GameWaiting" type="Node" parent="StateMachine" node_paths=PackedStringArray("thisWorld")]
+script = ExtResource("6_p3p0n")
+thisWorld = NodePath("../..")
+
+[node name="GameThrown" type="Node" parent="StateMachine" node_paths=PackedStringArray("thisWorld", "toaster", "target", "toastHome", "HUD", "progressBar")]
+script = ExtResource("7_aftpo")
+thisWorld = NodePath("../..")
+toaster = NodePath("../../Toaster")
+target = NodePath("../../Target")
+toastHome = NodePath("../../Toasts")
+HUD = NodePath("../../HUD")
+progressBar = NodePath("../../HUD/ProgressBar")
 
 [node name="background" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_736u3")
@@ -66,15 +113,21 @@ offset_bottom = 648.0
 scale = Vector2(1.00107, 1.00085)
 color = Color(0.646029, 0.646029, 0.646029, 1)
 
-[node name="mainCamera" type="Camera2D" parent="."]
+[node name="mainCamera" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
 position = Vector2(576, 324)
 process_callback = 0
 position_smoothing_enabled = true
+script = ExtResource("9_ehnhd")
+target = NodePath("../Target")
+maxZoomCamera = 0.3
+SHAKE_DECAY_RATE = 0.4
 
-[node name="worldCamera" type="Camera2D" parent="."]
+[node name="worldCamera" type="Camera2D" parent="." node_paths=PackedStringArray("camera")]
 position = Vector2(576, -1150)
 zoom = Vector2(0.175, 0.175)
 position_smoothing_enabled = true
+script = ExtResource("10_lqw7y")
+camera = NodePath("../mainCamera")
 
 [node name="Target" type="Sprite2D" parent="."]
 position = Vector2(576, -2569)
@@ -158,13 +211,6 @@ position = Vector2(576, 658)
 shape = SubResource("RectangleShape2D_v7gx7")
 
 [node name="HUD" type="CanvasLayer" parent="."]
-
-[node name="speedLabel" type="Label" parent="HUD"]
-offset_left = 21.0
-offset_top = 19.0
-offset_right = 134.0
-offset_bottom = 42.0
-pivot_offset = Vector2(-47, 50)
 
 [node name="ProgressBar" parent="HUD" instance=ExtResource("2_qlfrv")]
 position = Vector2(12, 156)

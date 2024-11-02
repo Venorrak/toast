@@ -35,4 +35,5 @@ func _on_main_menu_btn_pressed() -> void:
 
 
 func _on_new_game_btn_pressed() -> void:
+	globalVars.reset()
 	get_tree().reload_current_scene()

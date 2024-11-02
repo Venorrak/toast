@@ -18,6 +18,7 @@ func _on_main_menu_button_up() -> void:
 
 func _on_restart_button_up() -> void:
 	Engine.time_scale = 1.0
+	globalVars.reset()
 	get_tree().reload_current_scene()
 
 func _on_quit_button_up() -> void:
