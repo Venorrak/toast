@@ -30,6 +30,7 @@ func _ready() -> void:
 	getCreateToast()
 	SpawnPads()
 	camera.make_current()
+	randomize()
 	noise.seed = int(randi() * 1000)
 
 func _physics_process(delta: float) -> void:
@@ -60,7 +61,6 @@ func updateAnnouncementLabel() -> void:
 	var newAlpha = lerp(lastColor.a, 0.0, 0.2)
 	lastColor.a = newAlpha
 	anouncementLabel.modulate = lastColor
-
 
 # creation functions
 func getCreateToast() -> void:
