@@ -1,8 +1,7 @@
-[gd_scene load_steps=26 format=3 uid="uid://22f7y5815pvg"]
+[gd_scene load_steps=27 format=3 uid="uid://22f7y5815pvg"]
 
 [ext_resource type="Script" path="res://Code/Scripts/world.gd" id="1_kv0b3"]
 [ext_resource type="Texture2D" uid="uid://yj4bge7r8eqy" path="res://Rescources/2d/target.png" id="2_0hxpd"]
-[ext_resource type="Shader" path="res://Code/Shaders/pixelated.gdshader" id="2_8ru73"]
 [ext_resource type="Texture2D" uid="uid://ch0jv0psj74a0" path="res://Rescources/2d/progress_edge.png" id="2_b0wuk"]
 [ext_resource type="Script" path="res://Code/Scripts/state_machine.gd" id="2_lvsgn"]
 [ext_resource type="Shader" path="res://Code/Shaders/backgroundGame.gdshader" id="2_lw4js"]
@@ -17,6 +16,7 @@
 [ext_resource type="Script" path="res://Code/Scripts/leave_game_script.gd" id="9_2gm1m"]
 [ext_resource type="Script" path="res://Code/Scripts/main_camera.gd" id="9_ehnhd"]
 [ext_resource type="Script" path="res://Code/Scripts/world_camera.gd" id="10_lqw7y"]
+[ext_resource type="Shader" path="res://Code/Shaders/PixelPallete.gdshader" id="15_m48u7"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_es3j4"]
 noise_type = 3
@@ -32,11 +32,11 @@ shader_parameter/line_count = 56.705
 shader_parameter/speed = 0.115
 shader_parameter/blur = 0.0
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1mbag"]
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_d8xs1"]
-shader = ExtResource("2_8ru73")
-shader_parameter/quantize_size = 2.0
-shader_parameter/handle_scale = false
-shader_parameter/handle_subpixels = false
+shader = ExtResource("15_m48u7")
+shader_parameter/resolution = 400.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tnoqe"]
 size = Vector2(20, 3541)
@@ -53,8 +53,9 @@ size = Vector2(1152, 20)
 [sub_resource type="SystemFont" id="SystemFont_84bl5"]
 font_names = PackedStringArray("Trebuchet MS")
 
-[node name="World" type="Node2D"]
+[node name="World" type="Node2D" node_paths=PackedStringArray("globalSahader")]
 script = ExtResource("1_kv0b3")
+globalSahader = NodePath("Shader")
 noise = SubResource("FastNoiseLite_es3j4")
 nbOfBoost = 4
 nbOfSlow = 4
@@ -172,6 +173,7 @@ scroll_active = false
 [node name="Pads" type="Node2D" parent="."]
 
 [node name="Toaster" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_1mbag")
 position = Vector2(576, 327)
 scale = Vector2(1.03, 1.03)
 texture = ExtResource("6_5jxex")

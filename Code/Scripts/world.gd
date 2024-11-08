@@ -15,6 +15,7 @@ const SlowPadScene : PackedScene = preload("res://Scenes/Scenes/SlowPad.tscn") #
 const PauseScene : PackedScene = preload("res://Scenes/Scenes/startMenu.tscn") # pause menu
 
 @export var trailFrequency : int = 5 # frequency in px at which the trail will create a new point
+@export var globalSahader : ColorRect
 @export var noise : FastNoiseLite # noise used for random pads placement
 @export_group("map params")
 @export var nbOfBoost : int # number of boost pads
@@ -35,6 +36,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	updateTrails()
+	updateShaderPixelate()
 	
 	if anouncementTimer.time_left == 0:
 		updateAnnouncementLabel()
@@ -46,6 +48,11 @@ func _physics_process(delta: float) -> void:
 func cameraShake(shake : float) -> void:
 	camera.shake(shake)
 	
+func updateShaderPixelate() -> void:
+	var currentCamera : Camera2D = get_viewport().get_camera_2d()
+	var shaderVariance : float = 200
+	var trueShader : ShaderMaterial = globalSahader.material as ShaderMaterial
+	trueShader.set_shader_parameter("resolution", (400 + inverse_lerp(1, 0.3, currentCamera.zoom.x) * shaderVariance))
 #UI functions
 
 func ShowOnAnnouncementLabel(text : String, fontSize : int, color : Color = Color("#FFFFFF"), visibleTime : float = 3.0) -> void:
