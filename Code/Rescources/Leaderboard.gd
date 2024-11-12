@@ -5,13 +5,15 @@ class_name Leaderboard
 
 func isScoreInTopTen(score : int) -> bool:
 	var inTop : bool = false
+	if Leaders.size() < 10:
+		return true
 	for topScore in Leaders:
 		if topScore.score > score:
 			inTop = true
 	return inTop
 	
 func sortDescending(a, b):
-	if a.score > b.score:
+	if a.score < b.score:
 		return true
 	return false
 	
@@ -20,7 +22,8 @@ func sortScores() -> void:
 	
 func addNewTopScore(score : int, username : String) -> void:
 	if isScoreInTopTen(score):
-		Leaders.remove_at(0)
+		if Leaders.size() == 10:
+			Leaders.remove_at(0)
 		var newScore : Score = Score.new(username, score)
 		Leaders.append(newScore)
 		sortScores()

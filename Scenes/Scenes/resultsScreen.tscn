@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://jvp2sr5cohsx"]
+[gd_scene load_steps=10 format=3 uid="uid://jvp2sr5cohsx"]
 
 [ext_resource type="Theme" uid="uid://uqchl56daju3" path="res://Scenes/Themes/test_theme.tres" id="1_f7sry"]
 [ext_resource type="StyleBox" uid="uid://fc6ol8dv1clm" path="res://Scenes/Themes/red_panel_theme.tres" id="2_1hw7u"]
 [ext_resource type="Script" path="res://Code/Scripts/results_screen.gd" id="2_70yly"]
 [ext_resource type="StyleBox" uid="uid://dqmwh1homtqu7" path="res://Scenes/Themes/blue_panel_theme.tres" id="3_mm3h5"]
 [ext_resource type="Script" path="res://Code/Scripts/leave_game_script.gd" id="5_183lv"]
+[ext_resource type="Texture2D" uid="uid://dyo1ttxmv1a7k" path="res://Rescources/2d/arrow2.png" id="5_ryl1m"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q5l83"]
 bg_color = Color(0.32, 0.32, 0.32, 0.309804)
@@ -19,14 +20,21 @@ color = Color(0, 0, 1, 1)
 thickness = 2
 vertical = true
 
-[node name="ResultsScreen" type="Control"]
+[node name="ResultsScreen" type="Control" node_paths=PackedStringArray("RedLabels", "BlueLabels", "mainMenuButton", "newGameButton", "showTeamLabel", "selectorParent", "arrows")]
 layout_mode = 3
 anchors_preset = 0
 size_flags_horizontal = 0
 theme = ExtResource("1_f7sry")
 script = ExtResource("2_70yly")
+RedLabels = NodePath("Results/ScorePanelRed/Scores")
+BlueLabels = NodePath("Results/ScorePanelBlue/Scores")
+mainMenuButton = NodePath("Results/mainMenuBtn")
+newGameButton = NodePath("Results/NewGameBtn")
+showTeamLabel = NodePath("HighScore/team")
+selectorParent = NodePath("HighScore/letters")
+arrows = NodePath("HighScore/arrows")
 
-[node name="Control" type="Control" parent="."]
+[node name="Results" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 0
 offset_left = 366.0
@@ -34,7 +42,7 @@ offset_top = 90.0
 offset_right = 406.0
 offset_bottom = 130.0
 
-[node name="shade" type="Panel" parent="Control"]
+[node name="shade" type="Panel" parent="Results"]
 layout_mode = 0
 offset_left = -1385.0
 offset_top = -748.0
@@ -42,13 +50,13 @@ offset_right = 1871.0
 offset_bottom = 1036.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_q5l83")
 
-[node name="ScorePanelRed" type="Panel" parent="Control"]
+[node name="ScorePanelRed" type="Panel" parent="Results"]
 layout_mode = 0
 offset_right = 400.0
 offset_bottom = 150.0
 theme_override_styles/panel = ExtResource("2_1hw7u")
 
-[node name="1" type="RichTextLabel" parent="Control/ScorePanelRed"]
+[node name="1" type="RichTextLabel" parent="Results/ScorePanelRed"]
 layout_mode = 0
 offset_right = 60.0
 offset_bottom = 40.0
@@ -56,7 +64,7 @@ bbcode_enabled = true
 text = "[center]1[/center]"
 fit_content = true
 
-[node name="2" type="RichTextLabel" parent="Control/ScorePanelRed"]
+[node name="2" type="RichTextLabel" parent="Results/ScorePanelRed"]
 layout_mode = 0
 offset_top = 40.0
 offset_right = 60.0
@@ -65,7 +73,7 @@ bbcode_enabled = true
 text = "[center]2[/center]"
 fit_content = true
 
-[node name="3" type="RichTextLabel" parent="Control/ScorePanelRed"]
+[node name="3" type="RichTextLabel" parent="Results/ScorePanelRed"]
 layout_mode = 0
 offset_top = 80.0
 offset_right = 60.0
@@ -74,7 +82,7 @@ bbcode_enabled = true
 text = "[center]3[/center]"
 fit_content = true
 
-[node name="total" type="RichTextLabel" parent="Control/ScorePanelRed"]
+[node name="total" type="RichTextLabel" parent="Results/ScorePanelRed"]
 layout_mode = 0
 offset_top = 120.0
 offset_right = 60.0
@@ -83,28 +91,28 @@ bbcode_enabled = true
 text = "[center]Total[/center]"
 fit_content = true
 
-[node name="HSeparator" type="HSeparator" parent="Control/ScorePanelRed"]
+[node name="HSeparator" type="HSeparator" parent="Results/ScorePanelRed"]
 layout_mode = 0
 offset_left = -7.0
 offset_top = 34.0
 offset_right = 407.0
 offset_bottom = 38.0
 
-[node name="HSeparator2" type="HSeparator" parent="Control/ScorePanelRed"]
+[node name="HSeparator2" type="HSeparator" parent="Results/ScorePanelRed"]
 layout_mode = 0
 offset_left = -7.0
 offset_top = 74.0
 offset_right = 407.0
 offset_bottom = 78.0
 
-[node name="HSeparator3" type="HSeparator" parent="Control/ScorePanelRed"]
+[node name="HSeparator3" type="HSeparator" parent="Results/ScorePanelRed"]
 layout_mode = 0
 offset_left = -7.0
 offset_top = 114.0
 offset_right = 407.0
 offset_bottom = 118.0
 
-[node name="VSeparator" type="VSeparator" parent="Control/ScorePanelRed"]
+[node name="VSeparator" type="VSeparator" parent="Results/ScorePanelRed"]
 layout_mode = 0
 offset_left = 60.0
 offset_top = -8.165
@@ -112,12 +120,12 @@ offset_right = 64.0
 offset_bottom = 158.79
 theme_override_styles/separator = SubResource("StyleBoxLine_vf0x7")
 
-[node name="Scores" type="Control" parent="Control/ScorePanelRed"]
+[node name="Scores" type="Control" parent="Results/ScorePanelRed"]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="first" type="RichTextLabel" parent="Control/ScorePanelRed/Scores"]
+[node name="first" type="RichTextLabel" parent="Results/ScorePanelRed/Scores"]
 layout_mode = 0
 offset_left = 69.0
 offset_right = 398.0
@@ -126,7 +134,7 @@ bbcode_enabled = true
 text = "[center]500[/center]"
 fit_content = true
 
-[node name="second" type="RichTextLabel" parent="Control/ScorePanelRed/Scores"]
+[node name="second" type="RichTextLabel" parent="Results/ScorePanelRed/Scores"]
 layout_mode = 0
 offset_left = 69.0
 offset_top = 40.0
@@ -136,7 +144,7 @@ bbcode_enabled = true
 text = "[center]500[/center]"
 fit_content = true
 
-[node name="third" type="RichTextLabel" parent="Control/ScorePanelRed/Scores"]
+[node name="third" type="RichTextLabel" parent="Results/ScorePanelRed/Scores"]
 layout_mode = 0
 offset_left = 69.0
 offset_top = 80.0
@@ -146,7 +154,7 @@ bbcode_enabled = true
 text = "[center]500[/center]"
 fit_content = true
 
-[node name="total" type="RichTextLabel" parent="Control/ScorePanelRed/Scores"]
+[node name="total" type="RichTextLabel" parent="Results/ScorePanelRed/Scores"]
 layout_mode = 0
 offset_left = 69.0
 offset_top = 120.0
@@ -156,14 +164,14 @@ bbcode_enabled = true
 text = "[center]1500 points[/center]"
 fit_content = true
 
-[node name="ScorePanelBlue" type="Panel" parent="Control"]
+[node name="ScorePanelBlue" type="Panel" parent="Results"]
 layout_mode = 0
 offset_top = 190.0
 offset_right = 400.0
 offset_bottom = 340.0
 theme_override_styles/panel = ExtResource("3_mm3h5")
 
-[node name="1" type="RichTextLabel" parent="Control/ScorePanelBlue"]
+[node name="1" type="RichTextLabel" parent="Results/ScorePanelBlue"]
 layout_mode = 0
 offset_right = 60.0
 offset_bottom = 40.0
@@ -171,7 +179,7 @@ bbcode_enabled = true
 text = "[center]1[/center]"
 fit_content = true
 
-[node name="2" type="RichTextLabel" parent="Control/ScorePanelBlue"]
+[node name="2" type="RichTextLabel" parent="Results/ScorePanelBlue"]
 layout_mode = 0
 offset_top = 40.0
 offset_right = 60.0
@@ -180,7 +188,7 @@ bbcode_enabled = true
 text = "[center]2[/center]"
 fit_content = true
 
-[node name="3" type="RichTextLabel" parent="Control/ScorePanelBlue"]
+[node name="3" type="RichTextLabel" parent="Results/ScorePanelBlue"]
 layout_mode = 0
 offset_top = 80.0
 offset_right = 60.0
@@ -189,7 +197,7 @@ bbcode_enabled = true
 text = "[center]3[/center]"
 fit_content = true
 
-[node name="total" type="RichTextLabel" parent="Control/ScorePanelBlue"]
+[node name="total" type="RichTextLabel" parent="Results/ScorePanelBlue"]
 layout_mode = 0
 offset_top = 120.0
 offset_right = 60.0
@@ -198,28 +206,28 @@ bbcode_enabled = true
 text = "[center]Total[/center]"
 fit_content = true
 
-[node name="HSeparator" type="HSeparator" parent="Control/ScorePanelBlue"]
+[node name="HSeparator" type="HSeparator" parent="Results/ScorePanelBlue"]
 layout_mode = 0
 offset_left = -7.0
 offset_top = 34.0
 offset_right = 407.0
 offset_bottom = 38.0
 
-[node name="HSeparator2" type="HSeparator" parent="Control/ScorePanelBlue"]
+[node name="HSeparator2" type="HSeparator" parent="Results/ScorePanelBlue"]
 layout_mode = 0
 offset_left = -7.0
 offset_top = 74.0
 offset_right = 407.0
 offset_bottom = 78.0
 
-[node name="HSeparator3" type="HSeparator" parent="Control/ScorePanelBlue"]
+[node name="HSeparator3" type="HSeparator" parent="Results/ScorePanelBlue"]
 layout_mode = 0
 offset_left = -7.0
 offset_top = 114.0
 offset_right = 407.0
 offset_bottom = 118.0
 
-[node name="VSeparator" type="VSeparator" parent="Control/ScorePanelBlue"]
+[node name="VSeparator" type="VSeparator" parent="Results/ScorePanelBlue"]
 layout_mode = 0
 offset_left = 60.0
 offset_top = -8.165
@@ -227,12 +235,12 @@ offset_right = 64.0
 offset_bottom = 158.79
 theme_override_styles/separator = SubResource("StyleBoxLine_75l1w")
 
-[node name="Scores" type="Control" parent="Control/ScorePanelBlue"]
+[node name="Scores" type="Control" parent="Results/ScorePanelBlue"]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="first" type="RichTextLabel" parent="Control/ScorePanelBlue/Scores"]
+[node name="first" type="RichTextLabel" parent="Results/ScorePanelBlue/Scores"]
 layout_mode = 0
 offset_left = 69.0
 offset_right = 398.0
@@ -241,7 +249,7 @@ bbcode_enabled = true
 text = "[center]500[/center]"
 fit_content = true
 
-[node name="second" type="RichTextLabel" parent="Control/ScorePanelBlue/Scores"]
+[node name="second" type="RichTextLabel" parent="Results/ScorePanelBlue/Scores"]
 layout_mode = 0
 offset_left = 69.0
 offset_top = 40.0
@@ -251,7 +259,7 @@ bbcode_enabled = true
 text = "[center]500[/center]"
 fit_content = true
 
-[node name="third" type="RichTextLabel" parent="Control/ScorePanelBlue/Scores"]
+[node name="third" type="RichTextLabel" parent="Results/ScorePanelBlue/Scores"]
 layout_mode = 0
 offset_left = 69.0
 offset_top = 80.0
@@ -261,7 +269,7 @@ bbcode_enabled = true
 text = "[center]500[/center]"
 fit_content = true
 
-[node name="total" type="RichTextLabel" parent="Control/ScorePanelBlue/Scores"]
+[node name="total" type="RichTextLabel" parent="Results/ScorePanelBlue/Scores"]
 layout_mode = 0
 offset_left = 69.0
 offset_top = 120.0
@@ -271,7 +279,7 @@ bbcode_enabled = true
 text = "[center]1500 points[/center]"
 fit_content = true
 
-[node name="mainMenuBtn" type="Button" parent="Control"]
+[node name="mainMenuBtn" type="Button" parent="Results"]
 layout_mode = 0
 offset_left = 30.0
 offset_top = 400.0
@@ -283,7 +291,7 @@ focus_next = NodePath("../NewGameBtn")
 focus_previous = NodePath("../NewGameBtn")
 text = "Main menu"
 
-[node name="NewGameBtn" type="Button" parent="Control"]
+[node name="NewGameBtn" type="Button" parent="Results"]
 layout_mode = 0
 offset_left = 220.0
 offset_top = 400.0
@@ -295,8 +303,86 @@ focus_next = NodePath("../mainMenuBtn")
 focus_previous = NodePath("../mainMenuBtn")
 text = "New game"
 
+[node name="HighScore" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="shade" type="Panel" parent="HighScore"]
+offset_left = -1385.0
+offset_top = -748.0
+offset_right = 1871.0
+offset_bottom = 1036.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_q5l83")
+
+[node name="title" type="RichTextLabel" parent="HighScore"]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 114.0
+bbcode_enabled = true
+text = "[center][font_size=80][wave amp=20.0 freq=5.0 connected=1]New High Score ![/wave][/font_size][/center]"
+
+[node name="team" type="RichTextLabel" parent="HighScore"]
+layout_mode = 0
+offset_top = 91.0
+offset_right = 1152.0
+offset_bottom = 188.0
+bbcode_enabled = true
+text = "[center][font_size=70][color=blue]Blue Team[/color][/font_size][/center]"
+
+[node name="letters" type="Control" parent="HighScore"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="FirstLetter" type="RichTextLabel" parent="HighScore/letters"]
+layout_mode = 0
+offset_left = 325.0
+offset_top = 310.0
+offset_right = 427.0
+offset_bottom = 475.0
+bbcode_enabled = true
+text = "[center][font_size=120]A[/font_size][/center]"
+
+[node name="SecondLetter" type="RichTextLabel" parent="HighScore/letters"]
+layout_mode = 0
+offset_left = 525.0
+offset_top = 310.0
+offset_right = 627.0
+offset_bottom = 475.0
+bbcode_enabled = true
+text = "[center][font_size=120]A[/font_size][/center]"
+
+[node name="ThirdLetter" type="RichTextLabel" parent="HighScore/letters"]
+layout_mode = 0
+offset_left = 725.0
+offset_top = 310.0
+offset_right = 827.0
+offset_bottom = 475.0
+bbcode_enabled = true
+text = "[center][font_size=120]A[/font_size][/center]"
+
+[node name="arrows" type="Control" parent="HighScore"]
+anchors_preset = 0
+offset_left = 325.0
+offset_top = 310.0
+offset_right = 365.0
+offset_bottom = 350.0
+
+[node name="Up" type="Sprite2D" parent="HighScore/arrows"]
+position = Vector2(51, -9)
+texture = ExtResource("5_ryl1m")
+vframes = 2
+
+[node name="Down" type="Sprite2D" parent="HighScore/arrows"]
+position = Vector2(51, 185)
+texture = ExtResource("5_ryl1m")
+flip_v = true
+vframes = 2
+
 [node name="LeaveGameScript" type="Node" parent="."]
 script = ExtResource("5_183lv")
 
-[connection signal="pressed" from="Control/mainMenuBtn" to="." method="_on_main_menu_btn_pressed"]
-[connection signal="pressed" from="Control/NewGameBtn" to="." method="_on_new_game_btn_pressed"]
+[connection signal="pressed" from="Results/mainMenuBtn" to="." method="_on_main_menu_btn_pressed"]
+[connection signal="pressed" from="Results/NewGameBtn" to="." method="_on_new_game_btn_pressed"]

@@ -1,0 +1,166 @@
+[gd_scene load_steps=5 format=3 uid="uid://ci07706t2q8oo"]
+
+[ext_resource type="Script" path="res://Code/Scripts/leaderboard_menu.gd" id="1_1puu2"]
+[ext_resource type="Script" path="res://Code/Scripts/leave_game_script.gd" id="1_tujpd"]
+[ext_resource type="Shader" path="res://Code/Shaders/background.gdshader" id="2_6rgvy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oy1tr"]
+shader = ExtResource("2_6rgvy")
+shader_parameter/polar_coordinates = false
+shader_parameter/polar_center = Vector2(0.5, 0.5)
+shader_parameter/polar_zoom = 1.0
+shader_parameter/polar_repeat = 1.0
+shader_parameter/spin_rotation = null
+shader_parameter/spin_speed = 5.0
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/colour_1 = Color(0.31, 0.356, 1, 1)
+shader_parameter/colour_2 = Color(1, 0.11, 0.124833, 1)
+shader_parameter/colour_3 = Color(0, 0, 0, 1)
+shader_parameter/contrast = 2.0
+shader_parameter/spin_amount = 0.36
+shader_parameter/pixel_filter = 500.0
+
+[node name="LeaderboardMenu" type="Control" node_paths=PackedStringArray("names", "scores")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1puu2")
+names = NodePath("leaderboard/names")
+scores = NodePath("leaderboard/scores")
+
+[node name="LeaveGameScript" type="Node" parent="."]
+script = ExtResource("1_tujpd")
+
+[node name="background" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_oy1tr")
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="leaderboard" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="numbers" type="VBoxContainer" parent="leaderboard"]
+layout_mode = 2
+
+[node name="Label11" type="Label" parent="leaderboard/numbers"]
+layout_mode = 2
+text = "#"
+
+[node name="Label" type="Label" parent="leaderboard/numbers"]
+layout_mode = 2
+text = "1"
+
+[node name="Label2" type="Label" parent="leaderboard/numbers"]
+layout_mode = 2
+text = "2"
+
+[node name="Label3" type="Label" parent="leaderboard/numbers"]
+layout_mode = 2
+text = "3"
+
+[node name="Label4" type="Label" parent="leaderboard/numbers"]
+layout_mode = 2
+text = "4"
+
+[node name="Label5" type="Label" parent="leaderboard/numbers"]
+layout_mode = 2
+text = "5"
+
+[node name="Label6" type="Label" parent="leaderboard/numbers"]
+layout_mode = 2
+text = "6"
+
+[node name="Label7" type="Label" parent="leaderboard/numbers"]
+layout_mode = 2
+text = "7"
+
+[node name="Label8" type="Label" parent="leaderboard/numbers"]
+layout_mode = 2
+text = "8"
+
+[node name="Label9" type="Label" parent="leaderboard/numbers"]
+layout_mode = 2
+text = "9"
+
+[node name="Label10" type="Label" parent="leaderboard/numbers"]
+layout_mode = 2
+text = "10"
+
+[node name="names" type="VBoxContainer" parent="leaderboard"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="leaderboard/names"]
+layout_mode = 2
+text = "Name"
+
+[node name="Label2" type="Label" parent="leaderboard/names"]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="leaderboard/names"]
+layout_mode = 2
+
+[node name="Label4" type="Label" parent="leaderboard/names"]
+layout_mode = 2
+
+[node name="Label5" type="Label" parent="leaderboard/names"]
+layout_mode = 2
+
+[node name="Label6" type="Label" parent="leaderboard/names"]
+layout_mode = 2
+
+[node name="Label7" type="Label" parent="leaderboard/names"]
+layout_mode = 2
+
+[node name="Label8" type="Label" parent="leaderboard/names"]
+layout_mode = 2
+
+[node name="Label9" type="Label" parent="leaderboard/names"]
+layout_mode = 2
+
+[node name="Label10" type="Label" parent="leaderboard/names"]
+layout_mode = 2
+
+[node name="Label11" type="Label" parent="leaderboard/names"]
+layout_mode = 2
+
+[node name="scores" type="VBoxContainer" parent="leaderboard"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="leaderboard/scores"]
+layout_mode = 2
+text = "Score"
+
+[node name="Label2" type="Label" parent="leaderboard/scores"]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="leaderboard/scores"]
+layout_mode = 2
+
+[node name="Label4" type="Label" parent="leaderboard/scores"]
+layout_mode = 2
+
+[node name="Label5" type="Label" parent="leaderboard/scores"]
+layout_mode = 2
+
+[node name="Label6" type="Label" parent="leaderboard/scores"]
+layout_mode = 2
+
+[node name="Label7" type="Label" parent="leaderboard/scores"]
+layout_mode = 2
+
+[node name="Label8" type="Label" parent="leaderboard/scores"]
+layout_mode = 2
+
+[node name="Label9" type="Label" parent="leaderboard/scores"]
+layout_mode = 2
+
+[node name="Label10" type="Label" parent="leaderboard/scores"]
+layout_mode = 2
+
+[node name="Label11" type="Label" parent="leaderboard/scores"]
+layout_mode = 2

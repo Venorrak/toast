@@ -8,6 +8,9 @@ var leaderboard : Leaderboard = Leaderboard.new()
 
 func _ready() -> void:
 	verifySaveDirectory(save_file_path)
+	if not ResourceLoader.exists(save_file_path + save_file_name):
+		print("create new leaderboard")
+		saveLeaderboard()
 	loadLeaderboard()
 	
 func verifySaveDirectory(path : String) -> void:
