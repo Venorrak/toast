@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://22f7y5815pvg"]
+[gd_scene load_steps=28 format=3 uid="uid://22f7y5815pvg"]
 
 [ext_resource type="Script" path="res://Code/Scripts/world.gd" id="1_kv0b3"]
 [ext_resource type="Texture2D" uid="uid://yj4bge7r8eqy" path="res://Rescources/2d/target.png" id="2_0hxpd"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://Code/Scripts/leave_game_script.gd" id="9_2gm1m"]
 [ext_resource type="Script" path="res://Code/Scripts/main_camera.gd" id="9_ehnhd"]
 [ext_resource type="Script" path="res://Code/Scripts/world_camera.gd" id="10_lqw7y"]
+[ext_resource type="Script" path="res://Code/Scripts/grid.gd" id="14_jrhvo"]
 [ext_resource type="Shader" path="res://Code/Shaders/PixelPallete.gdshader" id="15_m48u7"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_es3j4"]
@@ -168,9 +169,14 @@ scroll_active = false
 
 [node name="Trails" type="Node2D" parent="."]
 
-[node name="Toasts" type="Node2D" parent="."]
-
 [node name="Pads" type="Node2D" parent="."]
+position = Vector2(0, -2893)
+script = ExtResource("14_jrhvo")
+gridSize = Vector2(1152, 3541)
+nbOfRows = 59
+nbOfColumns = 20
+
+[node name="Toasts" type="Node2D" parent="."]
 
 [node name="Toaster" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_1mbag")

@@ -98,26 +98,24 @@ func updateTrails() -> void:
 				allTrails[i].add_point(allToasts[i].global_position)
 
 func SpawnPads() -> void:
-	var leftBound : float = $LeftWall/CollisionShape2D.global_position.x + 40
-	var rightBound : float = $RightWall/CollisionShape2D.global_position.x - 40
-	var topBound : float = $TopWall/CollisionShape2D.global_position.y + 30
-	var downBound : float = $Toaster.global_position.y - 50
-	for i in nbOfBoost:
-		var newBoost = BoostPadScene.instantiate()
-		var xPos : float = (noise.get_noise_1d(randf_range(0, 100000)) + 1) / 2 
-		var yPos : float = (noise.get_noise_1d(randf_range(0, 100000)) + 1) / 2
-		newBoost.global_position = Vector2(
-			lerp(leftBound, rightBound, xPos),
-			lerp(topBound, downBound, yPos)
-		)
-		PadHome.add_child(newBoost)
-	
-	for i in nbOfSlow:
-		var newSlow = SlowPadScene.instantiate()
-		var xPos : float = (noise.get_noise_1d(randf_range(0, 100000)) + 1) / 2 
-		var yPos : float = (noise.get_noise_1d(randf_range(0, 100000)) + 1) / 2 
-		newSlow.global_position = Vector2(
-			lerp(leftBound, rightBound, xPos),
-			lerp(topBound, downBound, yPos)
-		)
-		PadHome.add_child(newSlow)
+	var xs : Array = range(PadHome.nbOfColumns)
+	var ys : Array = range(PadHome.nbOfRows)
+	xs.shuffle()
+	ys.shuffle()
+	for x in xs:
+		for y in ys:
+			if randf_range(0, 100) > 99 and nbOfSlow > 0 and not PadHome.isNearEnabledCell(Vector2(x,y)):
+				var newSlow := SlowPadScene.instantiate()
+				newSlow.position = PadHome.getCellCenterPosition(Vector2(x, y))
+				PadHome.add_child(newSlow)
+				PadHome.enableCell(Vector2(x, y))
+				nbOfSlow -= 1
+				
+	for x in xs:
+		for y in ys:
+			if randf_range(0, 100) > 99 and nbOfBoost > 0 and not PadHome.isNearEnabledCell(Vector2(x,y)):
+				var newBoost := BoostPadScene.instantiate()
+				newBoost.position = PadHome.getCellCenterPosition(Vector2(x, y))
+				PadHome.add_child(newBoost)
+				PadHome.enableCell(Vector2(x, y))
+				nbOfBoost -= 1
