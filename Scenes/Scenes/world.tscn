@@ -35,10 +35,6 @@ shader_parameter/blur = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1mbag"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_d8xs1"]
-shader = ExtResource("15_m48u7")
-shader_parameter/resolution = 400.0
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tnoqe"]
 size = Vector2(20, 3541)
 
@@ -51,12 +47,16 @@ size = Vector2(20, 3541)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v7gx7"]
 size = Vector2(1152, 20)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d8xs1"]
+shader = ExtResource("15_m48u7")
+shader_parameter/resolution = 400.0
+
 [sub_resource type="SystemFont" id="SystemFont_84bl5"]
 font_names = PackedStringArray("Trebuchet MS")
 
-[node name="World" type="Node2D" node_paths=PackedStringArray("globalSahader")]
+[node name="World" type="Node2D" node_paths=PackedStringArray("globalShader")]
 script = ExtResource("1_kv0b3")
-globalSahader = NodePath("Shader")
+globalShader = NodePath("shaderLayer/Shader")
 noise = SubResource("FastNoiseLite_es3j4")
 nbOfBoost = 4
 nbOfSlow = 4
@@ -187,13 +187,6 @@ texture = ExtResource("6_5jxex")
 [node name="Aim" type="Node2D" parent="Toaster"]
 position = Vector2(-0.5, -65)
 
-[node name="Shader" type="ColorRect" parent="."]
-material = SubResource("ShaderMaterial_d8xs1")
-offset_top = -2893.0
-offset_right = 16.0
-offset_bottom = -2843.8
-scale = Vector2(72, 72)
-
 [node name="LeftWall" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
@@ -218,7 +211,17 @@ shape = SubResource("RectangleShape2D_bo7f5")
 position = Vector2(576, 658)
 shape = SubResource("RectangleShape2D_v7gx7")
 
+[node name="shaderLayer" type="CanvasLayer" parent="."]
+
+[node name="Shader" type="ColorRect" parent="shaderLayer"]
+material = SubResource("ShaderMaterial_d8xs1")
+offset_top = -2893.0
+offset_right = 16.0
+offset_bottom = -2843.8
+scale = Vector2(72, 72)
+
 [node name="HUD" type="CanvasLayer" parent="."]
+layer = 2
 
 [node name="ProgressBar" parent="HUD" instance=ExtResource("2_qlfrv")]
 position = Vector2(12, 156)
