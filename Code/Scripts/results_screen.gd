@@ -33,8 +33,6 @@ func _ready() -> void:
 			reds[i].text = str(redScores[i])
 			
 	if leaderboardManager.isScoreInTopTen(redScores[3]) or leaderboardManager.isScoreInTopTen(blueScores[3]):
-		print("is in top")
-		print(leaderboardManager.leaderboard.Leaders)
 		setScene(true)
 		if redScores[3] >= blueScores[3]:
 			setTeamLabel("red", redScores[3])
@@ -77,7 +75,7 @@ func updateSelectors() -> void:
 		if cursorPosition > 0:
 			cursorPosition -= 1
 	if Input.is_action_just_pressed("Right"):
-		if cursorPosition < 3:
+		if cursorPosition < 2:
 			cursorPosition += 1
 	
 	for selectorIndex in range(3):

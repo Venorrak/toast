@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://blcbbps2v7mab"]
+[gd_scene load_steps=15 format=3 uid="uid://blcbbps2v7mab"]
 
 [ext_resource type="Script" path="res://Code/Scripts/main_menu.gd" id="1_cg3m7"]
 [ext_resource type="Shader" path="res://Code/Shaders/background.gdshader" id="1_opprs"]
@@ -7,7 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://cdqt27dnovwt7" path="res://Rescources/2d/play-button-pressed.png" id="4_t1chk"]
 [ext_resource type="Texture2D" uid="uid://11mbnb1c0k2q" path="res://Rescources/2d/play-button-fucus.png" id="5_qf5vr"]
 [ext_resource type="Texture2D" uid="uid://cuk68o2kqr0j7" path="res://Rescources/2d/options-button.png" id="6_uj4rp"]
+[ext_resource type="Texture2D" uid="uid://crfyumhbs60wp" path="res://Rescources/2d/leaderboard-button.png" id="7_hdijh"]
 [ext_resource type="Texture2D" uid="uid://dvw0f74ecfxxw" path="res://Rescources/2d/options-button-pressed.png" id="7_iw05l"]
+[ext_resource type="Texture2D" uid="uid://cmsdh5trn0n2i" path="res://Rescources/2d/leaderboard-button-pressed.png" id="8_u7dwj"]
 [ext_resource type="Texture2D" uid="uid://dsrkpd0arj5fw" path="res://Rescources/2d/quit-button.png" id="8_vxlgh"]
 [ext_resource type="Texture2D" uid="uid://f7l5eu4dbave" path="res://Rescources/2d/quit-button-pressed.png" id="9_kc1n4"]
 [ext_resource type="Texture2D" uid="uid://cs1cwk87qxnf3" path="res://Rescources/2d/title.png" id="10_lbdb5"]
@@ -68,12 +70,22 @@ texture_normal = ExtResource("3_l17b2")
 texture_pressed = ExtResource("4_t1chk")
 texture_focused = ExtResource("5_qf5vr")
 
-[node name="OptionsButton" type="TextureButton" parent="."]
+[node name="LeaderboardButton" type="TextureButton" parent="."]
 layout_mode = 0
 offset_left = 80.0
 offset_top = 270.0
 offset_right = 368.0
 offset_bottom = 366.0
+texture_normal = ExtResource("7_hdijh")
+texture_pressed = ExtResource("8_u7dwj")
+texture_focused = ExtResource("5_qf5vr")
+
+[node name="OptionsButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 370.0
+offset_right = 368.0
+offset_bottom = 466.0
 texture_normal = ExtResource("6_uj4rp")
 texture_pressed = ExtResource("7_iw05l")
 texture_focused = ExtResource("5_qf5vr")
@@ -81,9 +93,9 @@ texture_focused = ExtResource("5_qf5vr")
 [node name="QuitButton" type="TextureButton" parent="."]
 layout_mode = 0
 offset_left = 80.0
-offset_top = 370.0
+offset_top = 470.0
 offset_right = 368.0
-offset_bottom = 466.0
+offset_bottom = 566.0
 texture_normal = ExtResource("8_vxlgh")
 texture_pressed = ExtResource("9_kc1n4")
 texture_focused = ExtResource("5_qf5vr")
@@ -94,5 +106,6 @@ scale = Vector2(1.59, 1.59)
 texture = ExtResource("10_lbdb5")
 
 [connection signal="button_up" from="PlayButton" to="." method="_on_play_button_button_up"]
+[connection signal="button_up" from="LeaderboardButton" to="." method="_on_leaderboard_button_button_up"]
 [connection signal="button_up" from="OptionsButton" to="." method="_on_options_button_button_up"]
 [connection signal="button_up" from="QuitButton" to="." method="_on_quit_button_button_up"]
