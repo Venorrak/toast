@@ -181,8 +181,9 @@ GoalsY = 550
 topY = 70
 
 [node name="Panel" type="Panel" parent="."]
+offset_left = -355.071
 offset_top = 20.0
-offset_right = 475.0
+offset_right = 119.929
 offset_bottom = 620.0
 theme = SubResource("Theme_16riv")
 

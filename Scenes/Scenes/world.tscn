@@ -68,24 +68,24 @@ initial_state = NodePath("GameDirection")
 [node name="GameDirection" type="Node" parent="StateMachine" node_paths=PackedStringArray("thisWorld", "gauge", "gaugeLabel", "toaster")]
 script = ExtResource("3_7bal0")
 thisWorld = NodePath("../..")
-gauge = NodePath("../../Control/TextureProgressBar")
-gaugeLabel = NodePath("../../Control/RichTextLabel")
+gauge = NodePath("../../HUD/Control/TextureProgressBar")
+gaugeLabel = NodePath("../../HUD/Control/RichTextLabel")
 toaster = NodePath("../../Toaster")
 
 [node name="GamePower" type="Node" parent="StateMachine" node_paths=PackedStringArray("thisWorld", "HUD", "gauge", "target", "gaugeLabel")]
 script = ExtResource("4_vgxeg")
 thisWorld = NodePath("../..")
 HUD = NodePath("../../HUD")
-gauge = NodePath("../../Control/TextureProgressBar")
+gauge = NodePath("../../HUD/Control/TextureProgressBar")
 target = NodePath("../../Target")
-gaugeLabel = NodePath("../../Control/RichTextLabel")
+gaugeLabel = NodePath("../../HUD/Control/RichTextLabel")
 
 [node name="GameThrow" type="Node" parent="StateMachine" node_paths=PackedStringArray("thisWorld", "toaster", "gauge", "gaugeLabel")]
 script = ExtResource("5_6m2jq")
 thisWorld = NodePath("../..")
 toaster = NodePath("../../Toaster")
-gauge = NodePath("../../Control/TextureProgressBar")
-gaugeLabel = NodePath("../../Control/RichTextLabel")
+gauge = NodePath("../../HUD/Control/TextureProgressBar")
+gaugeLabel = NodePath("../../HUD/Control/RichTextLabel")
 
 [node name="GameWaiting" type="Node" parent="StateMachine" node_paths=PackedStringArray("thisWorld")]
 script = ExtResource("6_p3p0n")
@@ -135,37 +135,6 @@ camera = NodePath("../mainCamera")
 position = Vector2(576, -2569)
 scale = Vector2(3, 3)
 texture = ExtResource("2_0hxpd")
-
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_left = 1031.0
-offset_top = 233.0
-offset_right = 1031.0
-offset_bottom = 233.0
-scale = Vector2(2, 2)
-
-[node name="TextureProgressBar" type="TextureProgressBar" parent="Control"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-max_value = 500.0
-step = 5.0
-value = 70.0
-fill_mode = 3
-texture_under = ExtResource("2_b0wuk")
-texture_progress = ExtResource("3_ccj6t")
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Control"]
-layout_mode = 0
-offset_left = -15.0
-offset_top = -23.845
-offset_right = 58.86
-offset_bottom = 24.455
-theme_override_font_sizes/normal_font_size = 17
-bbcode_enabled = true
-text = "[center]100%+10[/center]"
-scroll_active = false
 
 [node name="Trails" type="Node2D" parent="."]
 
@@ -236,6 +205,37 @@ bbcode_enabled = true
 
 [node name="Timer" type="Timer" parent="HUD/AnnouncementLabel"]
 one_shot = true
+
+[node name="Control" type="Control" parent="HUD"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1031.0
+offset_top = 233.0
+offset_right = 1031.0
+offset_bottom = 233.0
+scale = Vector2(2, 2)
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="HUD/Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+max_value = 500.0
+step = 5.0
+value = 70.0
+fill_mode = 3
+texture_under = ExtResource("2_b0wuk")
+texture_progress = ExtResource("3_ccj6t")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HUD/Control"]
+layout_mode = 0
+offset_left = -15.0
+offset_top = -23.845
+offset_right = 58.86
+offset_bottom = 24.455
+theme_override_font_sizes/normal_font_size = 17
+bbcode_enabled = true
+text = "[center]100%+10[/center]"
+scroll_active = false
 
 [node name="LeaveGameScript" type="Node" parent="."]
 script = ExtResource("9_2gm1m")

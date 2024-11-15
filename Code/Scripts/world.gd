@@ -3,7 +3,7 @@ class_name World
 @onready var toastHome = $Toasts
 @onready var trailHome = $Trails
 @onready var PadHome = $Pads
-@onready var gauge = $Control/TextureProgressBar
+@onready var gauge = $HUD/Control/TextureProgressBar
 @onready var camera = $mainCamera
 @onready var anouncementLabel = $HUD/AnnouncementLabel
 @onready var anouncementTimer = $HUD/AnnouncementLabel/Timer
@@ -27,7 +27,7 @@ func _ready() -> void:
 	gauge.max_value = globalVars.maxSpeed
 	gauge.step = globalVars.maxSpeed / 100
 	gauge.visible = false
-	$Control/RichTextLabel.visible = false
+	$HUD/Control/RichTextLabel.visible = false
 	getCreateToast()
 	SpawnPads()
 	camera.make_current()

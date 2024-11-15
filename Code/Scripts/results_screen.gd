@@ -34,7 +34,7 @@ func _ready() -> void:
 			
 	if leaderboardManager.isScoreInTopTen(redScores[3]) or leaderboardManager.isScoreInTopTen(blueScores[3]):
 		setScene(true)
-		if redScores[3] >= blueScores[3]:
+		if redScores[3] <= blueScores[3]:
 			setTeamLabel("red", redScores[3])
 		else:
 			setTeamLabel("blue", blueScores[3])
