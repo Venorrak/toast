@@ -60,6 +60,7 @@ globalShader = NodePath("shaderLayer/Shader")
 noise = SubResource("FastNoiseLite_es3j4")
 nbOfBoost = 4
 nbOfSlow = 4
+nbOfMold = 1
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_lvsgn")
@@ -136,6 +137,14 @@ position = Vector2(576, -2569)
 scale = Vector2(3, 3)
 texture = ExtResource("2_0hxpd")
 
+[node name="Molds" type="Node2D" parent="."]
+position = Vector2(0, -2100)
+script = ExtResource("14_jrhvo")
+gridSize = Vector2(1152, 2748)
+nbOfRows = 40
+nbOfColumns = 4
+amountNear = 2
+
 [node name="Trails" type="Node2D" parent="."]
 
 [node name="Pads" type="Node2D" parent="."]
@@ -144,6 +153,7 @@ script = ExtResource("14_jrhvo")
 gridSize = Vector2(1152, 3541)
 nbOfRows = 59
 nbOfColumns = 20
+amountNear = 1
 
 [node name="Toasts" type="Node2D" parent="."]
 
@@ -228,10 +238,10 @@ texture_progress = ExtResource("3_ccj6t")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="HUD/Control"]
 layout_mode = 0
-offset_left = -15.0
-offset_top = -23.845
-offset_right = 58.86
-offset_bottom = 24.455
+offset_left = -19.5
+offset_top = -23.0
+offset_right = 64.5
+offset_bottom = 25.0
 theme_override_font_sizes/normal_font_size = 17
 bbcode_enabled = true
 text = "[center]100%+10[/center]"

@@ -2,7 +2,10 @@ extends RigidBody2D
 var toastTeam: int
 var collision : KinematicCollision2D
 signal toastCollision
+signal toastTookButter
 var acceleration : float = 1
+var mold : float = 0
+var canMold : bool = false
 
 @export var accelerationDecay : float
 
@@ -11,7 +14,8 @@ func _ready() -> void:
 	pass
 
 func _process(delta: float) -> void:
-	pass
+	if mold >= 100:
+		dieMakeCrumbs()
 
 func _physics_process(delta: float) -> void:
 	collision = move_and_collide(Vector2(0, 0), true)
@@ -27,8 +31,9 @@ func setTeam(team : int) -> void:
 
 func getTeam() -> int:
 	return toastTeam
-	
 
+func sendToastTookButter() -> void:
+	toastTookButter.emit(self)
 
 func _on_body_shape_entered(body_rid: RID, body: Node, body_shape_index: int, local_shape_index: int) -> void:
 	if linear_velocity.length() > 150:
@@ -39,3 +44,10 @@ func _on_body_shape_entered(body_rid: RID, body: Node, body_shape_index: int, lo
 			$GPUParticles2D.position = Vector2(0, 0)
 		$GPUParticles2D.emitting = true
 		toastCollision.emit(linear_velocity.length() / 7)
+		
+func dieMakeCrumbs() -> void:
+	pass
+	
+func addMold(amount : float) -> void:
+	if canMold:
+		mold += amount

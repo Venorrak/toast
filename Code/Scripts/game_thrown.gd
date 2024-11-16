@@ -13,7 +13,10 @@ class_name GameThrown
 var gameEnded : bool = false # is the game ended
 
 func handle_inputs() -> void:
-	pass
+	if Input.is_action_pressed("A"):
+		Engine.time_scale = 2.0
+	else:
+		Engine.time_scale = 1.0
 
 func update(delta: float) -> void:
 	pass
@@ -39,6 +42,7 @@ func physics_update(delta: float) -> void:
 			toaster.visible = true
 			globalVars.rotationSpeed = globalVars.rotationSpeedInit
 			globalVars.gaugeSpeed = globalVars.gaugeSpeedInit
+			Engine.time_scale = 1.0
 			Transitioned.emit(self, "GameDirection")
 		
 		# else the game is finished
@@ -48,7 +52,7 @@ func physics_update(delta: float) -> void:
 				gameEnding()
 
 func enter() -> void:
-	pass
+	globalVars.currentToast.canMold = true
 
 func exit() -> void:
 	pass

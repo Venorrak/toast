@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://Code/Scripts/leave_game_script.gd" id="9_s2rhs"]
 
 [node name="StartMenu" type="Control"]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,6 +27,7 @@ offset_bottom = 648.0
 color = Color(0, 0, 0, 0.235294)
 
 [node name="MainMenu" type="TextureButton" parent="."]
+process_mode = 3
 layout_mode = 0
 offset_left = 432.0
 offset_top = 281.0
@@ -36,6 +38,7 @@ texture_pressed = ExtResource("3_bn1i5")
 texture_focused = ExtResource("4_gh1sp")
 
 [node name="Restart" type="TextureButton" parent="."]
+process_mode = 3
 layout_mode = 0
 offset_left = 432.0
 offset_top = 181.0
@@ -46,6 +49,7 @@ texture_pressed = ExtResource("6_d31wk")
 texture_focused = ExtResource("4_gh1sp")
 
 [node name="Quit" type="TextureButton" parent="."]
+process_mode = 3
 layout_mode = 0
 offset_left = 432.0
 offset_top = 381.0
@@ -56,6 +60,7 @@ texture_pressed = ExtResource("8_0f31t")
 texture_focused = ExtResource("4_gh1sp")
 
 [node name="LeaveGameScript" type="Node" parent="."]
+process_mode = 3
 script = ExtResource("9_s2rhs")
 
 [connection signal="button_up" from="MainMenu" to="." method="_on_main_menu_button_up"]

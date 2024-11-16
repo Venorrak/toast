@@ -14,4 +14,5 @@ func _process(delta: float) -> void:
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("toast"):
 		body.acceleration *= 1.5
+		body.sendToastTookButter()
 		queue_free()

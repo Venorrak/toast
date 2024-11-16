@@ -1,8 +1,10 @@
-[gd_scene format=3 uid="uid://dqdu6mdlk617b"]
+[gd_scene load_steps=2 format=3 uid="uid://dqdu6mdlk617b"]
 
-[node name="Trail" type="Line2D"]
-width = 36.245
-default_color = Color(1, 0.833333, 0, 0.623529)
-joint_mode = 2
-begin_cap_mode = 2
-end_cap_mode = 2
+[ext_resource type="Script" path="res://Code/Scripts/trail.gd" id="1_a36rw"]
+
+[node name="Trail" type="Node2D"]
+script = ExtResource("1_a36rw")
+trailColor = Color(1, 0.833333, 0, 0.623529)
+totalDistance = 4500.0
+distanceAddedByButter = 300.0
+startLineWidth = 36.0
