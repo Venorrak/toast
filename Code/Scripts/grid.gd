@@ -38,3 +38,30 @@ func isNearEnabledCell(cell : Vector2) -> bool:
 func enableCell(cell : Vector2) -> void:
 	if not isOutOfBounds(cell):
 		enabledCells.append(cell)
+		
+func isCellEnabled(cell : Vector2) -> bool:
+	if enabledCells.has(cell):
+		return true
+	return false
+	
+func numberEnabledInRow(row : int) -> int:
+	var count : int = 0
+	for ena in enabledCells:
+		if ena.y == row:
+			count += 1
+	return count
+	
+func numberEnabledInColumn(col : int) -> int:
+	var count : int = 0
+	for ena in enabledCells:
+		if ena.x == col:
+			count += 1
+	return count
+
+func isNextToEnabled(cell : Vector2) -> bool:
+	for x in range(-1 , 2):
+		for y in range(-1, 2):
+			if not cell == Vector2(x, y):
+				if enabledCells.has(Vector2(cell.x + x, cell.y + y)):
+					return true
+	return false

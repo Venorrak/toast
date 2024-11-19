@@ -43,6 +43,9 @@ max_contacts_reported = 1
 linear_damp = 0.1
 script = ExtResource("1_bvevc")
 accelerationDecay = 0.9
+diffSpawnCrumbX = 3.0
+diffSpawnCrumbY = 3.0
+offsetRotationCrumb = 5.0
 
 [node name="Icon" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_7cgeh")

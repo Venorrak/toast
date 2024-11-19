@@ -23,6 +23,7 @@ const moldScene : PackedScene = preload("res://Scenes/Scenes/mold.tscn")
 @export var nbOfBoost : int # number of boost pads
 @export var nbOfSlow : int # number of slow pads
 @export var nbOfMold : int # number of mold zones
+@export var moldPosOffset : float
 
 func _ready() -> void:
 	globalVars.toastStartPosition = $Toaster.position
@@ -123,10 +124,12 @@ func SpawnMold() -> void:
 	ys.shuffle()
 	for x in xs:
 		for y in ys:
-			if randf_range(0, 100) > 75 and nbOfMold > 0 and not moldHome.isNearEnabledCell(Vector2(x,y)):
+			var offsetX : float = randf_range(-moldPosOffset, moldPosOffset)
+			var offsetY : float = randf_range(-moldPosOffset, moldPosOffset)
+			if moldHome.enabledCells.size() == 0 or nbOfMold > 0 and moldHome.numberEnabledInColumn(x) < 4 and moldHome.isNextToEnabled(Vector2(x,y)):
 				var newMold := moldScene.instantiate()
-				newMold.scale *= randf_range(1.0, 5)
 				newMold.position = moldHome.getCellCenterPosition(Vector2(x, y))
+				newMold.position += Vector2(offsetX, offsetY)
 				moldHome.add_child(newMold)
 				moldHome.enableCell(Vector2(x, y))
-				nbOfMold -= 1 
+				nbOfMold -= 1

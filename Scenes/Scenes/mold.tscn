@@ -9,8 +9,8 @@ size = Vector2(131.855, 138.93)
 [node name="Mold" type="Sprite2D"]
 texture = ExtResource("1_lcvgh")
 script = ExtResource("2_f2utm")
-moldAppliedOnEnter = 20.0
-moldAppliedOnTimout = 10.0
+moldAppliedOnEnter = 1.0
+moldAppliedOnTimout = 3.0
 
 [node name="Area2D" type="Area2D" parent="."]
 

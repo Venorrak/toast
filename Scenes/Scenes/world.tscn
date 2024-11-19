@@ -60,7 +60,8 @@ globalShader = NodePath("shaderLayer/Shader")
 noise = SubResource("FastNoiseLite_es3j4")
 nbOfBoost = 4
 nbOfSlow = 4
-nbOfMold = 1
+nbOfMold = 20
+moldPosOffset = 20.0
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_lvsgn")
@@ -141,9 +142,9 @@ texture = ExtResource("2_0hxpd")
 position = Vector2(0, -2100)
 script = ExtResource("14_jrhvo")
 gridSize = Vector2(1152, 2748)
-nbOfRows = 40
-nbOfColumns = 4
-amountNear = 2
+nbOfRows = 45
+nbOfColumns = 20
+amountNear = 4
 
 [node name="Trails" type="Node2D" parent="."]
 
@@ -154,6 +155,8 @@ gridSize = Vector2(1152, 3541)
 nbOfRows = 59
 nbOfColumns = 20
 amountNear = 1
+
+[node name="Crumbs" type="Node2D" parent="."]
 
 [node name="Toasts" type="Node2D" parent="."]
 

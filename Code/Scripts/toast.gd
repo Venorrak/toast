@@ -7,7 +7,13 @@ var acceleration : float = 1
 var mold : float = 0
 var canMold : bool = false
 
+@onready var crumbScene = preload("res://Scenes/Scenes/crumb.tscn")
+
 @export var accelerationDecay : float
+@export var diffSpawnCrumbX : float
+@export var diffSpawnCrumbY : float
+@export var offsetRotationCrumb : float
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -46,7 +52,31 @@ func _on_body_shape_entered(body_rid: RID, body: Node, body_shape_index: int, lo
 		toastCollision.emit(linear_velocity.length() / 7)
 		
 func dieMakeCrumbs() -> void:
-	pass
+	var crumbParent = get_parent().get_parent().get_node("Crumbs")
+	mold = 0
+	for i in range(4):
+		var newCrumb := crumbScene.instantiate()
+		var offset : Vector2 = Vector2(0,0)
+		match i:
+			0:
+				offset.x += diffSpawnCrumbX
+				offset.y += diffSpawnCrumbY
+			1:
+				offset.x -= diffSpawnCrumbX
+				offset.y += diffSpawnCrumbY
+			2:
+				offset.x += diffSpawnCrumbX
+				offset.y -= diffSpawnCrumbY
+			3:
+				offset.x -= diffSpawnCrumbX
+				offset.y -= diffSpawnCrumbY
+		newCrumb.position = self.position + offset
+		newCrumb.linear_velocity = self.linear_velocity + (offset / 2)
+		newCrumb.rotation_degrees = randf_range(-offsetRotationCrumb, offsetRotationCrumb)
+		crumbParent.add_child(newCrumb)
+	$GPUParticles2D.emitting = true
+	linear_velocity = Vector2(0,0)
+	position = Vector2(100000, 1000000)
 	
 func addMold(amount : float) -> void:
 	if canMold:

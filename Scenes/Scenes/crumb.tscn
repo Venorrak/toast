@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://oubwm02q2nha"]
+
+[ext_resource type="Texture2D" uid="uid://dryay04ljkfi0" path="res://Rescources/2d/icon.svg" id="1_6l72b"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_1gu08"]
+bounce = 0.9
+
+[node name="Crumb" type="RigidBody2D"]
+mass = 0.03
+physics_material_override = SubResource("PhysicsMaterial_1gu08")
+gravity_scale = 0.0
+contact_monitor = true
+linear_damp = 0.4
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_6l72b")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-19, -19, 19, -19, 19, 19, -19, 19)
