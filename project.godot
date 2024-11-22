@@ -20,6 +20,7 @@ config/icon="res://Rescources/2d/toast.png"
 EmbedGameAutoload="*res://addons/fabimakesgames.embed_game/embed_game_autoload.gd"
 globalVars="*res://Code/Scripts/GlobalVars.gd"
 leaderboardManager="*res://Code/Scripts/LeaderboardManager.gd"
+AudioManager="*res://Code/Scripts/AudioManager.gd"
 
 [display]
 

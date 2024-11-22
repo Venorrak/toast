@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://blcbbps2v7mab"]
+[gd_scene load_steps=16 format=3 uid="uid://blcbbps2v7mab"]
 
 [ext_resource type="Script" path="res://Code/Scripts/main_menu.gd" id="1_cg3m7"]
 [ext_resource type="Shader" path="res://Code/Shaders/background.gdshader" id="1_opprs"]
@@ -30,7 +30,19 @@ shader_parameter/contrast = 2.0
 shader_parameter/spin_amount = 0.36
 shader_parameter/pixel_filter = 500.0
 
-[node name="MainMenu" type="Control" groups=["pauseMenu"]]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5dkv1"]
+bg_color = Color(0.18359, 0.18359, 0.18359, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("playButton", "leaderboardButton", "optionsButton", "quitButton", "mainMenu", "optionsMenu", "volumeSlider") groups=["pauseMenu"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,6 +50,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_cg3m7")
+playButton = NodePath("Main/PlayButton")
+leaderboardButton = NodePath("Main/LeaderboardButton")
+optionsButton = NodePath("Main/OptionsButton")
+quitButton = NodePath("Main/QuitButton")
+mainMenu = NodePath("Main")
+optionsMenu = NodePath("Options")
+volumeSlider = NodePath("Options/Panel/HSlider")
 
 [node name="LeaveGameScript" type="Node" parent="."]
 script = ExtResource("2_gp3cy")
@@ -48,19 +67,12 @@ layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 648.0
 
-[node name="Title" type="RichTextLabel" parent="."]
-visible = false
-texture_filter = 1
-layout_mode = 0
-offset_left = 27.0
-offset_top = 24.0
-offset_right = 602.0
-offset_bottom = 138.0
-theme_override_font_sizes/normal_font_size = 60
-bbcode_enabled = true
-text = "[fill][center]Yes, No, Toaster ?[/center][/fill]"
+[node name="Main" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="PlayButton" type="TextureButton" parent="."]
+[node name="PlayButton" type="TextureButton" parent="Main"]
 layout_mode = 0
 offset_left = 80.0
 offset_top = 170.0
@@ -70,7 +82,7 @@ texture_normal = ExtResource("3_l17b2")
 texture_pressed = ExtResource("4_t1chk")
 texture_focused = ExtResource("5_qf5vr")
 
-[node name="LeaderboardButton" type="TextureButton" parent="."]
+[node name="LeaderboardButton" type="TextureButton" parent="Main"]
 layout_mode = 0
 offset_left = 80.0
 offset_top = 270.0
@@ -80,7 +92,7 @@ texture_normal = ExtResource("7_hdijh")
 texture_pressed = ExtResource("8_u7dwj")
 texture_focused = ExtResource("5_qf5vr")
 
-[node name="OptionsButton" type="TextureButton" parent="."]
+[node name="OptionsButton" type="TextureButton" parent="Main"]
 layout_mode = 0
 offset_left = 80.0
 offset_top = 370.0
@@ -90,7 +102,7 @@ texture_normal = ExtResource("6_uj4rp")
 texture_pressed = ExtResource("7_iw05l")
 texture_focused = ExtResource("5_qf5vr")
 
-[node name="QuitButton" type="TextureButton" parent="."]
+[node name="QuitButton" type="TextureButton" parent="Main"]
 layout_mode = 0
 offset_left = 80.0
 offset_top = 470.0
@@ -100,12 +112,61 @@ texture_normal = ExtResource("8_vxlgh")
 texture_pressed = ExtResource("9_kc1n4")
 texture_focused = ExtResource("5_qf5vr")
 
+[node name="Options" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="Options"]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 0.454902)
+
+[node name="Panel" type="Panel" parent="Options"]
+layout_mode = 0
+offset_left = 376.0
+offset_top = 260.0
+offset_right = 776.0
+offset_bottom = 460.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_5dkv1")
+
+[node name="HSlider" type="HSlider" parent="Options/Panel"]
+layout_mode = 0
+offset_left = 44.0
+offset_top = 45.0
+offset_right = 332.0
+offset_bottom = 65.0
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="TextureButton" type="TextureButton" parent="Options/Panel"]
+layout_mode = 0
+offset_left = 44.0
+offset_top = 100.0
+offset_right = 332.0
+offset_bottom = 196.0
+texture_normal = ExtResource("8_vxlgh")
+texture_pressed = ExtResource("9_kc1n4")
+texture_focused = ExtResource("5_qf5vr")
+
+[node name="Label" type="Label" parent="Options/Panel"]
+layout_mode = 0
+offset_left = 141.0
+offset_top = 13.0
+offset_right = 259.0
+offset_bottom = 36.0
+text = "Master Volume"
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(577, 117)
 scale = Vector2(1.59, 1.59)
 texture = ExtResource("10_lbdb5")
 
-[connection signal="button_up" from="PlayButton" to="." method="_on_play_button_button_up"]
-[connection signal="button_up" from="LeaderboardButton" to="." method="_on_leaderboard_button_button_up"]
-[connection signal="button_up" from="OptionsButton" to="." method="_on_options_button_button_up"]
-[connection signal="button_up" from="QuitButton" to="." method="_on_quit_button_button_up"]
+[connection signal="button_up" from="Main/PlayButton" to="." method="_on_play_button_button_up"]
+[connection signal="button_up" from="Main/LeaderboardButton" to="." method="_on_leaderboard_button_button_up"]
+[connection signal="button_up" from="Main/OptionsButton" to="." method="_on_options_button_button_up"]
+[connection signal="button_up" from="Main/QuitButton" to="." method="_on_quit_button_button_up"]
+[connection signal="button_up" from="Options/Panel/TextureButton" to="." method="_on_texture_button_button_up"]
