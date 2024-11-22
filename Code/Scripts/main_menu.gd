@@ -10,6 +10,7 @@ extends Control
 
 func _ready() -> void:
 	playButton.grab_focus()
+	volumeSlider.value = AudioManager.getVolume()
 	
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_accept"):
@@ -42,4 +43,6 @@ func changeEnabledButtons(enable : bool) -> void:
 	leaderboardButton.disabled = not enable
 	optionsButton.disabled = not enable
 	quitButton.disabled = not enable
-	
+
+func _on_h_slider_value_changed(value: float) -> void:
+	AudioManager.setVolume(value)

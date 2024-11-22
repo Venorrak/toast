@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://cqbub2tu8p1bs"]
+[gd_scene load_steps=11 format=3 uid="uid://cqbub2tu8p1bs"]
 
 [ext_resource type="Script" path="res://Code/Scripts/start_menu.gd" id="1_ovi72"]
 [ext_resource type="Texture2D" uid="uid://rqta1853o2am" path="res://Rescources/2d/mm-button.png" id="2_h6yc8"]
+[ext_resource type="AudioStream" uid="uid://bwv2mivqf2tvd" path="res://Rescources/Sound/menu1.wav" id="2_y6pwj"]
 [ext_resource type="Texture2D" uid="uid://b26siqehgqve6" path="res://Rescources/2d/mm-button-pressed.png" id="3_bn1i5"]
 [ext_resource type="Texture2D" uid="uid://11mbnb1c0k2q" path="res://Rescources/2d/play-button-fucus.png" id="4_gh1sp"]
 [ext_resource type="Texture2D" uid="uid://c4vkd68ue1ji1" path="res://Rescources/2d/restart-button.png" id="5_5fqo4"]
@@ -19,6 +20,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ovi72")
+buttonSound = ExtResource("2_y6pwj")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0

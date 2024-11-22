@@ -7,6 +7,7 @@ extends Control
 @export var showTeamLabel : RichTextLabel
 @export var selectorParent : Control
 @export var arrows : Control
+@export var buttonSound : AudioStream
 
 enum screenState {RESULTS, NEWSCORE}
 
@@ -42,6 +43,9 @@ func _ready() -> void:
 		mainMenuButton.grab_focus()
 
 func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("ui_accept"):
+		AudioManager.playSound(buttonSound)
+	
 	if currentState == screenState.NEWSCORE:
 		updateSelectors()
 		updateCursor()

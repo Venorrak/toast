@@ -6,27 +6,53 @@ signal toastTookButter
 var acceleration : float = 1
 var mold : float = 0
 var canMold : bool = false
+var crumbTextures : Array = []
 
+@onready var Sprite : Sprite2D = $Icon
 @onready var crumbScene = preload("res://Scenes/Scenes/crumb.tscn")
 
+@export var collisionSound : AudioStream
+@export var dieSound : AudioStream
 @export var accelerationDecay : float
 @export var diffSpawnCrumbX : float
 @export var diffSpawnCrumbY : float
 @export var offsetRotationCrumb : float
+@export var TopLeftToast : Texture2D
+@export var TopRightToast : Texture2D
+@export var BottomLeftToast : Texture2D
+@export var BottomRightToast : Texture2D
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	crumbTextures.append(BottomRightToast)
+	crumbTextures.append(BottomLeftToast)
+	crumbTextures.append(TopRightToast)
+	crumbTextures.append(TopLeftToast)
 
 func _process(delta: float) -> void:
 	if mold >= 100:
 		dieMakeCrumbs()
 
 func _physics_process(delta: float) -> void:
+	updateSprite()
 	collision = move_and_collide(Vector2(0, 0), true)
 	linear_velocity *= acceleration
 	acceleration = lerp(acceleration, 1.0, accelerationDecay)
+
+func updateSprite() -> void:
+	if mold > 100:
+		Sprite.frame = 5
+	elif mold > 80:
+		Sprite.frame = 4
+	elif mold > 60:
+		Sprite.frame = 3
+	elif mold > 40:
+		Sprite.frame = 2
+	elif mold > 20:
+		Sprite.frame = 1
+	else:
+		Sprite.frame = 0
 
 func setTeam(team : int) -> void:
 	toastTeam = team
@@ -50,6 +76,7 @@ func _on_body_shape_entered(body_rid: RID, body: Node, body_shape_index: int, lo
 			$GPUParticles2D.position = Vector2(0, 0)
 		$GPUParticles2D.emitting = true
 		toastCollision.emit(linear_velocity.length() / 7)
+		AudioManager.playSound(collisionSound)
 		
 func dieMakeCrumbs() -> void:
 	var crumbParent = get_parent().get_parent().get_node("Crumbs")
@@ -70,6 +97,7 @@ func dieMakeCrumbs() -> void:
 			3:
 				offset.x -= diffSpawnCrumbX
 				offset.y -= diffSpawnCrumbY
+		newCrumb.setSprite(crumbTextures[i])
 		newCrumb.position = self.position + offset
 		newCrumb.linear_velocity = self.linear_velocity + (offset / 2)
 		newCrumb.rotation_degrees = randf_range(-offsetRotationCrumb, offsetRotationCrumb)
@@ -77,6 +105,7 @@ func dieMakeCrumbs() -> void:
 	$GPUParticles2D.emitting = true
 	linear_velocity = Vector2(0,0)
 	position = Vector2(100000, 1000000)
+	AudioManager.playSound(dieSound)
 	
 func addMold(amount : float) -> void:
 	if canMold:

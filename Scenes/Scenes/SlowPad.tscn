@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://0cylq62sakxk"]
+[gd_scene load_steps=5 format=3 uid="uid://0cylq62sakxk"]
 
 [ext_resource type="Texture2D" uid="uid://b4k7n6h632gal" path="res://Rescources/2d/jam.png" id="1_64iem"]
 [ext_resource type="Script" path="res://Code/Scripts/slow_pad.gd" id="2_tsffb"]
+[ext_resource type="AudioStream" uid="uid://dpnmqv3le4wnd" path="res://Rescources/Sound/JamPickup.wav" id="3_w5ii6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_skaya"]
 size = Vector2(50, 50)
@@ -9,6 +10,7 @@ size = Vector2(50, 50)
 [node name="SlowPad" type="Sprite2D"]
 texture = ExtResource("1_64iem")
 script = ExtResource("2_tsffb")
+pickupSound = ExtResource("3_w5ii6")
 
 [node name="Area2D" type="Area2D" parent="."]
 

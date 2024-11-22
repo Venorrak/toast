@@ -130,6 +130,7 @@ func SpawnMold() -> void:
 				var newMold := moldScene.instantiate()
 				newMold.position = moldHome.getCellCenterPosition(Vector2(x, y))
 				newMold.position += Vector2(offsetX, offsetY)
+				newMold.rotation_degrees = randf_range(0, 360)
 				moldHome.add_child(newMold)
 				moldHome.enableCell(Vector2(x, y))
 				nbOfMold -= 1

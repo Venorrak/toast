@@ -1,8 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://c6sp8nlbw614f"]
+[gd_scene load_steps=14 format=3 uid="uid://c6sp8nlbw614f"]
 
 [ext_resource type="Shader" path="res://Code/Shaders/highlight.gdshader" id="1_8jusr"]
 [ext_resource type="Script" path="res://Code/Scripts/toast.gd" id="1_bvevc"]
 [ext_resource type="Texture2D" uid="uid://bkowr3t32fkn4" path="res://Rescources/2d/toast.png" id="1_fxcxw"]
+[ext_resource type="AudioStream" uid="uid://c0f1rl5j03333" path="res://Rescources/Sound/toastBounce.wav" id="2_gb5is"]
+[ext_resource type="Texture2D" uid="uid://8e7ci1cbr834" path="res://Rescources/2d/TL-mold-toast.png" id="2_oxebc"]
+[ext_resource type="AudioStream" uid="uid://hlxaftlarndl" path="res://Rescources/Sound/ToastDie.wav" id="3_4vyyv"]
+[ext_resource type="Texture2D" uid="uid://bdng8lmpyaq6x" path="res://Rescources/2d/toast-mold-sheet.png" id="3_25tyb"]
+[ext_resource type="Texture2D" uid="uid://dkf3h1x4uj58u" path="res://Rescources/2d/TR-mold-toast.png" id="3_ren0r"]
+[ext_resource type="Texture2D" uid="uid://knbupnpp67wy" path="res://Rescources/2d/BL-mold-toast.png" id="4_vhjuv"]
+[ext_resource type="Texture2D" uid="uid://lf6e8hbtcton" path="res://Rescources/2d/BR-mold-toast.png" id="5_ie7dk"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_f8uda"]
 bounce = 0.9
@@ -12,7 +19,7 @@ resource_local_to_scene = true
 shader = ExtResource("1_8jusr")
 shader_parameter/outline_color = Color(1, 0, 0, 1)
 shader_parameter/progress = 1.0
-shader_parameter/width = 0.025
+shader_parameter/width = 0.005
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qdnof"]
 lifetime_randomness = 0.4
@@ -42,18 +49,26 @@ contact_monitor = true
 max_contacts_reported = 1
 linear_damp = 0.1
 script = ExtResource("1_bvevc")
+collisionSound = ExtResource("2_gb5is")
+dieSound = ExtResource("3_4vyyv")
 accelerationDecay = 0.9
 diffSpawnCrumbX = 3.0
 diffSpawnCrumbY = 3.0
 offsetRotationCrumb = 5.0
+TopLeftToast = ExtResource("2_oxebc")
+TopRightToast = ExtResource("3_ren0r")
+BottomLeftToast = ExtResource("4_vhjuv")
+BottomRightToast = ExtResource("5_ie7dk")
 
 [node name="Icon" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_7cgeh")
 rotation = 1.5708
 scale = Vector2(2, 2)
-texture = ExtResource("1_fxcxw")
+texture = ExtResource("3_25tyb")
+hframes = 5
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+visible = false
 rotation = 1.5708
 polygon = PackedVector2Array(34, 24, 34, 41, 28, 48, -26, 48, -32, 42, -32, 16, -40, 10, -48, 2, -48, -16, -46, -22, -28, -34, -22, -34, -18, -32, -18, -28, 10, -28, 14, -34, 22, -34, 36, -32, 46, -18, 46, 0, 44, 8, 38, 12)
 

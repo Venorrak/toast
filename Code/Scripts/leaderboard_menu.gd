@@ -4,6 +4,11 @@ var leaderboard : Array
 @export var names : VBoxContainer
 @export var scores : VBoxContainer
 @export var mainMenuButton : TextureButton
+@export var buttonSound : AudioStream
+
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("ui_accept"):
+		AudioManager.playSound(buttonSound)
 
 func _ready() -> void:
 	mainMenuButton.grab_focus()

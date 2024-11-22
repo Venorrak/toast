@@ -1,5 +1,5 @@
 extends Sprite2D
-
+@export var pickupSound : AudioStream
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -14,4 +14,5 @@ func _process(delta: float) -> void:
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("toast"):
 		body.acceleration *= 0.8
+		AudioManager.playSound(pickupSound)
 		queue_free()

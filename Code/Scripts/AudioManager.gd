@@ -1,13 +1,11 @@
-extends Node
-var volume : float
+extends AudioStreamPlayer
 
 func playSound(sound : AudioStream) -> void:
-	var instance = AudioStreamPlayer.new()
-	instance.stream = sound
-	instance.play()
+	stream = sound
+	play()
 
 func setVolume(newVolume : float) -> void:
-	volume = linear_to_db(newVolume)
+	volume_db = linear_to_db(newVolume)
 	
-func getVolume() -> void:
-	return db_to_linear(volume)
+func getVolume() -> float:
+	return db_to_linear(volume_db)

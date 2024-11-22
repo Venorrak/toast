@@ -1,12 +1,17 @@
 extends Control
 signal restartGame
 
+@export var buttonSound : AudioStream
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$Restart.grab_focus()
 	get_tree().paused = true
 
 func _physics_process(delta: float) -> void:
+	if Input.is_action_just_pressed("ui_accept"):
+		AudioManager.playSound(buttonSound)
+	
 	if Input.is_action_just_pressed("pause"):
 		get_tree().paused = false
 		queue_free()

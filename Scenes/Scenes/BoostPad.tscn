@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://ctyt1e7iwnnbf"]
+[gd_scene load_steps=5 format=3 uid="uid://ctyt1e7iwnnbf"]
 
 [ext_resource type="Texture2D" uid="uid://cy8lh37h3fi20" path="res://Rescources/2d/butter.png" id="1_vfcbr"]
 [ext_resource type="Script" path="res://Code/Scripts/boost_pad.gd" id="2_ql0bu"]
+[ext_resource type="AudioStream" uid="uid://k1x0abfrgyhj" path="res://Rescources/Sound/ButterPickup.wav" id="3_tmiop"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hbet0"]
 size = Vector2(38, 38)
@@ -10,6 +11,7 @@ size = Vector2(38, 38)
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("1_vfcbr")
 script = ExtResource("2_ql0bu")
+pickupSound = ExtResource("3_tmiop")
 
 [node name="Area2D" type="Area2D" parent="."]
 
