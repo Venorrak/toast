@@ -7,13 +7,14 @@ class_name GameThrown
 @export var toastHome : Node2D
 @export var HUD : CanvasLayer
 @export var progressBar : Node2D
+@export var infoLabel : Label
 
 @onready var ResultsScene : PackedScene = preload("res://Scenes/Scenes/resultsScreen.tscn")
 
 var gameEnded : bool = false # is the game ended
 
 func handle_inputs() -> void:
-	if Input.is_action_pressed("A"):
+	if Input.is_action_pressed("interact"):
 		Engine.time_scale = 2.0
 	else:
 		Engine.time_scale = 1.0
@@ -53,6 +54,7 @@ func physics_update(delta: float) -> void:
 
 func enter() -> void:
 	globalVars.currentToast.canMold = true
+	DisplayInfo()
 
 func exit() -> void:
 	pass
@@ -84,3 +86,9 @@ func gameEnding() -> void:
 	newResultScene.updateBlueScore(blueTeamScore)
 	newResultScene.updateRedScore(redTeamScore)
 	HUD.add_child(newResultScene)
+	
+func DisplayInfo() -> void:
+	if arcadeManager.is_on_arcade():
+		infoLabel.text = "Press A to speed up. Press X to change to world camera"
+	else:
+		infoLabel.text = "Press E to speed up. Press V to change to world camera"

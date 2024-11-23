@@ -6,6 +6,7 @@ class_name GamePower
 @export var gauge : TextureProgressBar
 @export var target : Sprite2D
 @export var gaugeLabel : RichTextLabel
+@export var infoLabel : Label
 
 var variationPercentage : float = 10 # max variation of the power output. if you change don't forget to change in qte.gd too
 
@@ -16,11 +17,14 @@ func handle_inputs() -> void:
 	if Input.is_action_just_pressed("interact"):
 		globalVars.toastSpeed = gauge.value
 		globalVars.gaugeSpeed = 0
-		var minigame = QTEScene.instantiate()
-		minigame.connect("_minigame_finished", minigameFinished)
-		minigame.connect("_animation_finished", minigameAnimFinished)
-		HUD.add_child(minigame)
-		Transitioned.emit(self, "GameWaiting")
+		if globalVars.miniGameEnabled:
+			var minigame = QTEScene.instantiate()
+			minigame.connect("_minigame_finished", minigameFinished)
+			minigame.connect("_animation_finished", minigameAnimFinished)
+			HUD.add_child(minigame)
+			Transitioned.emit(self, "GameWaiting")
+		else:
+			Transitioned.emit(self, "GameThrow")
 
 func update(delta: float) -> void:
 	pass
@@ -34,20 +38,20 @@ func physics_update(delta: float) -> void:
 		ShowOnGaugeLabel(int((gauge.value * 100) / globalVars.maxSpeed))
 
 func enter() -> void:
-	pass
+	DisplayInfo()
 
 func exit() -> void:
-	pass
+	infoLabel.text = ""
 	
 func minigameAnimFinished(scene) -> void:
 	scene.queue_free()
 	Transitioned.emit(self, "GameThrow")
 	
 func minigameFinished(scene) -> void:
-	var incertancy : float = variationPercentage - scene.getScore() # x/10 of incertaincy
+	var incertancy : float = globalVars.variationPowerPercentage - scene.getScore() # x/10 of incertaincy
 	ShowOnGaugeLabel(int((gauge.value * 100) / globalVars.maxSpeed), incertancy)
-	var tenPercentOfPower : float = (variationPercentage * globalVars.maxSpeed) / 100 # 10% of max power
-	incertancy = (incertancy * tenPercentOfPower) / variationPercentage
+	var PercentOfPower : float = (globalVars.variationPowerPercentage * globalVars.maxSpeed) / 100 # 10% of max power
+	incertancy = (incertancy * PercentOfPower) / globalVars.variationPowerPercentage
 	var oldToastSpeed : float = globalVars.toastSpeed
 	globalVars.toastSpeed = randf_range(oldToastSpeed - incertancy, oldToastSpeed + incertancy)
 	
@@ -60,3 +64,9 @@ func ShowOnGaugeLabel(percentage: int, incertancy : float = 0) -> void:
 		newString += ' ±' + str(incertancy) + '[/shake]'
 	newString += '[/center]'
 	gaugeLabel.text = newString
+
+func DisplayInfo() -> void:
+	if arcadeManager.is_on_arcade():
+		infoLabel.text = "Press A to choose the power output of the toaster"
+	else:
+		infoLabel.text = "Press E to choose the power output of the toaster"

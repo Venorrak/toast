@@ -112,7 +112,7 @@ func showGoalResult(gotIt : bool, qteType: String) -> void:
 			Goals.get_children()[i].startAnim(gotIt)
 
 func getScore() -> float:
-	return (nbOfRight * 10) / nbOfQTE
+	return (nbOfRight * globalVars.variationPowerPercentage) / nbOfQTE
 	
 func startTimer() -> void:
 	timer.start()

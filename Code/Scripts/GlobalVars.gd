@@ -11,6 +11,11 @@ const ValidToastDistance: float = 750 # maximum distance from the target where t
 var nbOfToasts : int = 6 # total number of toast for the game
 var toastStartPosition: Vector2
 const maxSpeed: int = 1500 # maximum speed of gauge and toast
+const variationPowerPercentage : float = 20
+var miniGameEnabled : bool = true
+var butterEnabled : bool = true
+var jamEnabled : bool = true
+var moldEnabled : bool = true
 
 
 func reset() -> void:
@@ -18,3 +23,10 @@ func reset() -> void:
 	gaugeSpeed= 12
 	rotationSpeed = 3
 	nbOfToasts = 6
+
+func resetLevelParams() -> void:
+	miniGameEnabled = true
+	butterEnabled = true
+	jamEnabled = true
+	moldEnabled = true
+	

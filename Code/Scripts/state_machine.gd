@@ -13,6 +13,7 @@ func _ready() -> void:
 	
 	if initial_state :
 		current_state = initial_state
+		current_state.enter()
 	
 func _process(delta: float) -> void:
 	if current_state:

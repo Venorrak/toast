@@ -1,11 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://jvp2sr5cohsx"]
+[gd_scene load_steps=10 format=3 uid="uid://jvp2sr5cohsx"]
 
 [ext_resource type="Theme" uid="uid://uqchl56daju3" path="res://Scenes/Themes/test_theme.tres" id="1_f7sry"]
 [ext_resource type="StyleBox" uid="uid://fc6ol8dv1clm" path="res://Scenes/Themes/red_panel_theme.tres" id="2_1hw7u"]
 [ext_resource type="Script" path="res://Code/Scripts/results_screen.gd" id="2_70yly"]
 [ext_resource type="AudioStream" uid="uid://bwv2mivqf2tvd" path="res://Rescources/Sound/menu1.wav" id="3_kavbe"]
 [ext_resource type="StyleBox" uid="uid://dqmwh1homtqu7" path="res://Scenes/Themes/blue_panel_theme.tres" id="3_mm3h5"]
-[ext_resource type="Script" path="res://Code/Scripts/leave_game_script.gd" id="5_183lv"]
 [ext_resource type="Texture2D" uid="uid://dyo1ttxmv1a7k" path="res://Rescources/2d/arrow2.png" id="5_ryl1m"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q5l83"]
@@ -383,9 +382,6 @@ position = Vector2(51, 185)
 texture = ExtResource("5_ryl1m")
 flip_v = true
 vframes = 2
-
-[node name="LeaveGameScript" type="Node" parent="."]
-script = ExtResource("5_183lv")
 
 [connection signal="pressed" from="Results/mainMenuBtn" to="." method="_on_main_menu_btn_pressed"]
 [connection signal="pressed" from="Results/NewGameBtn" to="." method="_on_new_game_btn_pressed"]

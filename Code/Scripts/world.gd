@@ -34,7 +34,8 @@ func _ready() -> void:
 	$HUD/Control/RichTextLabel.visible = false
 	getCreateToast()
 	SpawnPads()
-	SpawnMold()
+	if globalVars.moldEnabled:
+		SpawnMold()
 	camera.make_current()
 	randomize()
 	noise.seed = int(randi() * 1000)
@@ -99,23 +100,25 @@ func SpawnPads() -> void:
 	var ys : Array = range(PadHome.nbOfRows)
 	xs.shuffle()
 	ys.shuffle()
-	for x in xs:
-		for y in ys:
-			if randf_range(0, 100) > 99 and nbOfSlow > 0 and not PadHome.isNearEnabledCell(Vector2(x,y)):
-				var newSlow := SlowPadScene.instantiate()
-				newSlow.position = PadHome.getCellCenterPosition(Vector2(x, y))
-				PadHome.add_child(newSlow)
-				PadHome.enableCell(Vector2(x, y))
-				nbOfSlow -= 1
-				
-	for x in xs:
-		for y in ys:
-			if randf_range(0, 100) > 99 and nbOfBoost > 0 and not PadHome.isNearEnabledCell(Vector2(x,y)):
-				var newBoost := BoostPadScene.instantiate()
-				newBoost.position = PadHome.getCellCenterPosition(Vector2(x, y))
-				PadHome.add_child(newBoost)
-				PadHome.enableCell(Vector2(x, y))
-				nbOfBoost -= 1
+	if globalVars.jamEnabled:
+		for x in xs:
+			for y in ys:
+				if randf_range(0, 100) > 99 and nbOfSlow > 0 and not PadHome.isNearEnabledCell(Vector2(x,y)):
+					var newSlow := SlowPadScene.instantiate()
+					newSlow.position = PadHome.getCellCenterPosition(Vector2(x, y))
+					PadHome.add_child(newSlow)
+					PadHome.enableCell(Vector2(x, y))
+					nbOfSlow -= 1
+	
+	if globalVars.butterEnabled:
+		for x in xs:
+			for y in ys:
+				if randf_range(0, 100) > 99 and nbOfBoost > 0 and not PadHome.isNearEnabledCell(Vector2(x,y)):
+					var newBoost := BoostPadScene.instantiate()
+					newBoost.position = PadHome.getCellCenterPosition(Vector2(x, y))
+					PadHome.add_child(newBoost)
+					PadHome.enableCell(Vector2(x, y))
+					nbOfBoost -= 1
 
 func SpawnMold() -> void:
 	var xs : Array = range(moldHome.nbOfColumns)

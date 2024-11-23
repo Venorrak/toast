@@ -5,6 +5,7 @@ class_name GameDirection
 @export var gauge: TextureProgressBar
 @export var gaugeLabel : RichTextLabel
 @export var toaster : Sprite2D
+@export var infoLabel : Label
 
 func handle_inputs() -> void:
 	if Input.is_action_just_pressed("interact"):
@@ -24,7 +25,14 @@ func physics_update(delta: float) -> void:
 			globalVars.rotationSpeed *= -1
 
 func enter() -> void:
-	pass
+	DisplayInfo()
 
 func exit() -> void:
 	pass
+
+func DisplayInfo() -> void:
+	if arcadeManager.is_on_arcade():
+		infoLabel.text = "Press A to choose toaster direction"
+	else:
+		infoLabel.text = "Press E to choose toaster direction"
+	

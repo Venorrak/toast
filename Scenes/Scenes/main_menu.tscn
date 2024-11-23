@@ -1,8 +1,7 @@
-[gd_scene load_steps=19 format=3 uid="uid://blcbbps2v7mab"]
+[gd_scene load_steps=24 format=3 uid="uid://blcbbps2v7mab"]
 
 [ext_resource type="Script" path="res://Code/Scripts/main_menu.gd" id="1_cg3m7"]
 [ext_resource type="Shader" path="res://Code/Shaders/background.gdshader" id="1_opprs"]
-[ext_resource type="Script" path="res://Code/Scripts/leave_game_script.gd" id="2_gp3cy"]
 [ext_resource type="AudioStream" uid="uid://bwv2mivqf2tvd" path="res://Rescources/Sound/menu1.wav" id="2_yxowl"]
 [ext_resource type="Texture2D" uid="uid://3fhjqo2ic8yt" path="res://Rescources/2d/play-button.png" id="3_l17b2"]
 [ext_resource type="Texture2D" uid="uid://cdqt27dnovwt7" path="res://Rescources/2d/play-button-pressed.png" id="4_t1chk"]
@@ -14,8 +13,14 @@
 [ext_resource type="Texture2D" uid="uid://dsrkpd0arj5fw" path="res://Rescources/2d/quit-button.png" id="8_vxlgh"]
 [ext_resource type="Texture2D" uid="uid://f7l5eu4dbave" path="res://Rescources/2d/quit-button-pressed.png" id="9_kc1n4"]
 [ext_resource type="Texture2D" uid="uid://cs1cwk87qxnf3" path="res://Rescources/2d/title.png" id="10_lbdb5"]
+[ext_resource type="Texture2D" uid="uid://dc1jnfwurpdb0" path="res://Rescources/2d/HowTo-button.png" id="11_4erby"]
+[ext_resource type="Texture2D" uid="uid://b8o6onqfirkga" path="res://Rescources/2d/HowTo-button-pressed.png" id="12_4knot"]
 [ext_resource type="Texture2D" uid="uid://dr7rlkagrija3" path="res://Rescources/2d/back-button.png" id="14_7kwaq"]
+[ext_resource type="StyleBox" uid="uid://1lf556x3emov" path="res://Scenes/Themes/main_menu_panel.tres" id="14_he23a"]
 [ext_resource type="Texture2D" uid="uid://daifp0wi5too8" path="res://Rescources/2d/back-button-pressed.png" id="15_heefq"]
+[ext_resource type="Texture2D" uid="uid://cy8lh37h3fi20" path="res://Rescources/2d/butter.png" id="18_nohkh"]
+[ext_resource type="Texture2D" uid="uid://b4k7n6h632gal" path="res://Rescources/2d/jam.png" id="19_pgrsm"]
+[ext_resource type="Texture2D" uid="uid://dcmewu6a0a7d3" path="res://Rescources/2d/mold.png" id="20_n7qxl"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nfa6p"]
 shader = ExtResource("1_opprs")
@@ -33,19 +38,11 @@ shader_parameter/contrast = 2.0
 shader_parameter/spin_amount = 0.36
 shader_parameter/pixel_filter = 500.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5dkv1"]
-bg_color = Color(0.18359, 0.18359, 0.18359, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_48e2i"]
+color = Color(1, 1, 1, 1)
+vertical = true
 
-[node name="MainMenu" type="Control" node_paths=PackedStringArray("playButton", "leaderboardButton", "optionsButton", "quitButton", "mainMenu", "optionsMenu", "volumeSlider") groups=["pauseMenu"]]
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("volumeSlider", "playButton", "leaderboardButton", "optionsButton", "quitButton", "howToBackButton", "miniGameCheck", "butterCheck", "jamCheck", "moldCheck", "mainMenu", "playMenu", "optionsMenu", "howToMenu") groups=["pauseMenu"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -54,16 +51,20 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_cg3m7")
 buttonSound = ExtResource("2_yxowl")
+volumeSlider = NodePath("Options/Panel/HSlider")
 playButton = NodePath("Main/PlayButton")
 leaderboardButton = NodePath("Main/LeaderboardButton")
 optionsButton = NodePath("Main/OptionsButton")
 quitButton = NodePath("Main/QuitButton")
+howToBackButton = NodePath("HowTo/Panel/backButton")
+miniGameCheck = NodePath("Play/Panel/VBoxContainer/minigameButton")
+butterCheck = NodePath("Play/Panel/VBoxContainer/butterButton")
+jamCheck = NodePath("Play/Panel/VBoxContainer/jamButton")
+moldCheck = NodePath("Play/Panel/VBoxContainer/moldButton")
 mainMenu = NodePath("Main")
+playMenu = NodePath("Play")
 optionsMenu = NodePath("Options")
-volumeSlider = NodePath("Options/Panel/HSlider")
-
-[node name="LeaveGameScript" type="Node" parent="."]
-script = ExtResource("2_gp3cy")
+howToMenu = NodePath("HowTo")
 
 [node name="background" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_nfa6p")
@@ -79,9 +80,9 @@ offset_bottom = 40.0
 [node name="PlayButton" type="TextureButton" parent="Main"]
 layout_mode = 0
 offset_left = 80.0
-offset_top = 170.0
+offset_top = 150.0
 offset_right = 368.0
-offset_bottom = 266.0
+offset_bottom = 246.0
 texture_normal = ExtResource("3_l17b2")
 texture_pressed = ExtResource("4_t1chk")
 texture_focused = ExtResource("5_qf5vr")
@@ -89,9 +90,9 @@ texture_focused = ExtResource("5_qf5vr")
 [node name="LeaderboardButton" type="TextureButton" parent="Main"]
 layout_mode = 0
 offset_left = 80.0
-offset_top = 270.0
+offset_top = 250.0
 offset_right = 368.0
-offset_bottom = 366.0
+offset_bottom = 346.0
 texture_normal = ExtResource("7_hdijh")
 texture_pressed = ExtResource("8_u7dwj")
 texture_focused = ExtResource("5_qf5vr")
@@ -99,21 +100,88 @@ texture_focused = ExtResource("5_qf5vr")
 [node name="OptionsButton" type="TextureButton" parent="Main"]
 layout_mode = 0
 offset_left = 80.0
-offset_top = 370.0
+offset_top = 350.0
 offset_right = 368.0
-offset_bottom = 466.0
+offset_bottom = 446.0
 texture_normal = ExtResource("6_uj4rp")
 texture_pressed = ExtResource("7_iw05l")
+texture_focused = ExtResource("5_qf5vr")
+
+[node name="HowToButton" type="TextureButton" parent="Main"]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 450.0
+offset_right = 368.0
+offset_bottom = 546.0
+texture_normal = ExtResource("11_4erby")
+texture_pressed = ExtResource("12_4knot")
 texture_focused = ExtResource("5_qf5vr")
 
 [node name="QuitButton" type="TextureButton" parent="Main"]
 layout_mode = 0
 offset_left = 80.0
-offset_top = 470.0
+offset_top = 550.0
 offset_right = 368.0
-offset_bottom = 566.0
+offset_bottom = 646.0
 texture_normal = ExtResource("8_vxlgh")
 texture_pressed = ExtResource("9_kc1n4")
+texture_focused = ExtResource("5_qf5vr")
+
+[node name="Play" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="Play"]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 0.454902)
+
+[node name="Panel" type="Panel" parent="Play"]
+layout_mode = 0
+offset_left = 432.0
+offset_top = 163.0
+offset_right = 720.0
+offset_bottom = 502.0
+theme_override_styles/panel = ExtResource("14_he23a")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Play/Panel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+alignment = 1
+
+[node name="minigameButton" type="CheckButton" parent="Play/Panel/VBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Mini-Game (guitar hero)"
+
+[node name="butterButton" type="CheckButton" parent="Play/Panel/VBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Butter"
+
+[node name="jamButton" type="CheckButton" parent="Play/Panel/VBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Jam"
+
+[node name="moldButton" type="CheckButton" parent="Play/Panel/VBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Mold"
+
+[node name="playFRButton" type="TextureButton" parent="Play/Panel/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("3_l17b2")
+texture_pressed = ExtResource("4_t1chk")
+texture_focused = ExtResource("5_qf5vr")
+
+[node name="backButton" type="TextureButton" parent="Play/Panel/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("14_7kwaq")
+texture_pressed = ExtResource("15_heefq")
 texture_focused = ExtResource("5_qf5vr")
 
 [node name="Options" type="Control" parent="."]
@@ -134,7 +202,7 @@ offset_left = 376.0
 offset_top = 260.0
 offset_right = 776.0
 offset_bottom = 460.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_5dkv1")
+theme_override_styles/panel = ExtResource("14_he23a")
 
 [node name="HSlider" type="HSlider" parent="Options/Panel"]
 layout_mode = 0
@@ -165,6 +233,216 @@ offset_right = 259.0
 offset_bottom = 36.0
 text = "Master Volume"
 
+[node name="HowTo" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="HowTo"]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 0.454902)
+
+[node name="Panel" type="Panel" parent="HowTo"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 160.0
+offset_right = 1132.0
+offset_bottom = 628.0
+theme_override_styles/panel = ExtResource("14_he23a")
+
+[node name="VSeparator" type="VSeparator" parent="HowTo/Panel"]
+layout_mode = 0
+offset_left = 556.0
+offset_top = 2.285
+offset_right = 560.0
+offset_bottom = 466.855
+theme_override_styles/separator = SubResource("StyleBoxLine_48e2i")
+
+[node name="backButton" type="TextureButton" parent="HowTo/Panel"]
+layout_mode = 0
+offset_left = 412.0
+offset_top = 373.4
+offset_right = 700.0
+offset_bottom = 469.4
+texture_normal = ExtResource("14_7kwaq")
+texture_pressed = ExtResource("15_heefq")
+texture_focused = ExtResource("5_qf5vr")
+
+[node name="left" type="Control" parent="HowTo/Panel"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="titleLeft" type="Label" parent="HowTo/Panel/left"]
+layout_mode = 0
+offset_left = 209.0
+offset_right = 347.0
+offset_bottom = 34.0
+theme_override_font_sizes/font_size = 24
+text = "How to play"
+
+[node name="titleRight" type="Label" parent="HowTo/Panel/left"]
+layout_mode = 0
+offset_left = 707.0
+offset_right = 961.0
+offset_bottom = 34.0
+theme_override_font_sizes/font_size = 24
+text = "Elements of the world"
+
+[node name="subtitleLeft1" type="Label" parent="HowTo/Panel/left"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 40.0
+offset_right = 58.0
+offset_bottom = 63.0
+theme_override_font_sizes/font_size = 16
+text = "Basics"
+
+[node name="Label" type="Label" parent="HowTo/Panel/left/subtitleLeft1"]
+layout_mode = 0
+offset_top = 25.0
+offset_right = 537.0
+offset_bottom = 82.0
+theme_override_font_sizes/font_size = 12
+text = "In a match of \"yes no toaster\" each player has 3 toasts and their goal is to throw the toast near the center of the target to lose points (the goal is to have the least points)(the more you are close to the center, the less you have points)"
+autowrap_mode = 3
+
+[node name="subtitleLeft2" type="Label" parent="HowTo/Panel/left"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 125.0
+offset_right = 171.0
+offset_bottom = 148.0
+theme_override_font_sizes/font_size = 16
+text = "Steps for each toasts"
+
+[node name="Label" type="Label" parent="HowTo/Panel/left/subtitleLeft2"]
+layout_mode = 0
+offset_top = 25.0
+offset_right = 534.0
+offset_bottom = 62.0
+theme_override_font_sizes/font_size = 12
+text = "The first step is to choose the direction in which the toast is gonna be thrown. The player has to stop the toaster from turning to do that."
+autowrap_mode = 3
+
+[node name="HSeparator" type="HSeparator" parent="HowTo/Panel/left/subtitleLeft2"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 64.0
+offset_right = 536.0
+offset_bottom = 68.0
+
+[node name="Label2" type="Label" parent="HowTo/Panel/left/subtitleLeft2"]
+layout_mode = 0
+offset_top = 70.0
+offset_right = 534.0
+offset_bottom = 93.0
+theme_override_font_sizes/font_size = 12
+text = "The second step is to choose the power output ( speed ) at which the toast is gonna be thrown. You can see the gauge on the left displaying the power."
+autowrap_mode = 3
+
+[node name="HSeparator2" type="HSeparator" parent="HowTo/Panel/left/subtitleLeft2"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 110.0
+offset_right = 536.0
+offset_bottom = 114.0
+
+[node name="Label3" type="Label" parent="HowTo/Panel/left/subtitleLeft2"]
+offset_top = 115.0
+offset_right = 534.0
+offset_bottom = 152.0
+theme_override_font_sizes/font_size = 12
+text = "After choosing the power output, a mini-game appears and you have to press the right inputs at the right time to get the most of them right. After the mini-game is finished, depending on how many inputs you got right, an incertancy will be added you to you power output. EX: My power was at 60% and I got ±10%, this means that the power output can be from 50 to 70%."
+autowrap_mode = 3
+
+[node name="Label4" type="Label" parent="HowTo/Panel/left/subtitleLeft2"]
+offset_top = 225.0
+offset_right = 401.0
+offset_bottom = 262.0
+theme_override_font_sizes/font_size = 12
+text = "The last step is to throw the toast and hope it lands where you wanted."
+autowrap_mode = 3
+
+[node name="HSeparator3" type="HSeparator" parent="HowTo/Panel/left/subtitleLeft2"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 216.0
+offset_right = 538.0
+offset_bottom = 220.0
+
+[node name="Right" type="Control" parent="HowTo/Panel"]
+anchors_preset = 0
+offset_left = 556.0
+offset_right = 596.0
+offset_bottom = 40.0
+
+[node name="subtitleRight1" type="Label" parent="HowTo/Panel/Right"]
+offset_left = 10.0
+offset_top = 40.0
+offset_right = 58.0
+offset_bottom = 63.0
+theme_override_font_sizes/font_size = 16
+text = "Butter"
+
+[node name="Label" type="Label" parent="HowTo/Panel/Right/subtitleRight1"]
+layout_mode = 0
+offset_top = 25.0
+offset_right = 484.0
+offset_bottom = 69.0
+theme_override_font_sizes/font_size = 12
+text = "Butter can Spawn on the map and is a collectible object. When taken, butter will boost your speed and make it so your toast can go further."
+autowrap_mode = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="HowTo/Panel/Right/subtitleRight1"]
+position = Vector2(510, 40)
+texture = ExtResource("18_nohkh")
+
+[node name="subtitleRight2" type="Label" parent="HowTo/Panel/Right"]
+offset_left = 10.0
+offset_top = 130.0
+offset_right = 60.0
+offset_bottom = 153.0
+theme_override_font_sizes/font_size = 16
+text = "Jam"
+
+[node name="Label" type="Label" parent="HowTo/Panel/Right/subtitleRight2"]
+layout_mode = 0
+offset_top = 25.0
+offset_right = 484.0
+offset_bottom = 69.0
+theme_override_font_sizes/font_size = 12
+text = "Jam can Spawn on the map and is a collectible object. When taken, jam will make your toast slow down :("
+autowrap_mode = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="HowTo/Panel/Right/subtitleRight2"]
+position = Vector2(510, 40)
+texture = ExtResource("19_pgrsm")
+
+[node name="subtitleRight3" type="Label" parent="HowTo/Panel/Right"]
+offset_left = 10.0
+offset_top = 215.0
+offset_right = 60.0
+offset_bottom = 238.0
+theme_override_font_sizes/font_size = 16
+text = "Mold"
+
+[node name="Label" type="Label" parent="HowTo/Panel/Right/subtitleRight3"]
+layout_mode = 0
+offset_top = 25.0
+offset_right = 484.0
+offset_bottom = 69.0
+theme_override_font_sizes/font_size = 12
+text = "Mold can Spawn on the map and cannot be picked up. When your toast goes over mold, it will start to mold itself. When a toast is fully molded, it will break apart and you will loose the toast."
+autowrap_mode = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="HowTo/Panel/Right/subtitleRight3"]
+position = Vector2(510, 50)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("20_n7qxl")
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(577, 117)
 scale = Vector2(1.59, 1.59)
@@ -173,7 +451,11 @@ texture = ExtResource("10_lbdb5")
 [connection signal="button_up" from="Main/PlayButton" to="." method="_on_play_button_button_up"]
 [connection signal="button_up" from="Main/LeaderboardButton" to="." method="_on_leaderboard_button_button_up"]
 [connection signal="button_up" from="Main/OptionsButton" to="." method="_on_options_button_button_up"]
+[connection signal="button_up" from="Main/HowToButton" to="." method="_on_how_to_button_button_up"]
 [connection signal="button_up" from="Main/QuitButton" to="." method="_on_quit_button_button_up"]
+[connection signal="button_up" from="Play/Panel/VBoxContainer/playFRButton" to="." method="_on_play_fr_button_button_up"]
+[connection signal="button_up" from="Play/Panel/VBoxContainer/backButton" to="." method="_on_back_button_button_up"]
 [connection signal="drag_ended" from="Options/Panel/HSlider" to="." method="_on_h_slider_drag_ended"]
 [connection signal="value_changed" from="Options/Panel/HSlider" to="." method="_on_h_slider_value_changed"]
 [connection signal="button_up" from="Options/Panel/TextureButton" to="." method="_on_texture_button_button_up"]
+[connection signal="button_up" from="HowTo/Panel/backButton" to="." method="_on_back_button_how_button_up"]

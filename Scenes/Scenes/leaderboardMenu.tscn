@@ -1,7 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://byt0iti4d6cpo"]
+[gd_scene load_steps=8 format=3 uid="uid://byt0iti4d6cpo"]
 
 [ext_resource type="Script" path="res://Code/Scripts/leaderboard_menu.gd" id="1_1puu2"]
-[ext_resource type="Script" path="res://Code/Scripts/leave_game_script.gd" id="1_tujpd"]
 [ext_resource type="Shader" path="res://Code/Shaders/background.gdshader" id="2_6rgvy"]
 [ext_resource type="AudioStream" uid="uid://bwv2mivqf2tvd" path="res://Rescources/Sound/menu1.wav" id="2_hl43i"]
 [ext_resource type="Theme" uid="uid://uqchl56daju3" path="res://Scenes/Themes/test_theme.tres" id="4_juh33"]
@@ -36,9 +35,6 @@ names = NodePath("Panel/leaderboard/names")
 scores = NodePath("Panel/leaderboard/scores")
 mainMenuButton = NodePath("MainMenuBtn")
 buttonSound = ExtResource("2_hl43i")
-
-[node name="LeaveGameScript" type="Node" parent="."]
-script = ExtResource("1_tujpd")
 
 [node name="background" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_oy1tr")

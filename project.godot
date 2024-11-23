@@ -21,6 +21,7 @@ EmbedGameAutoload="*res://addons/fabimakesgames.embed_game/embed_game_autoload.g
 globalVars="*res://Code/Scripts/GlobalVars.gd"
 leaderboardManager="*res://Code/Scripts/LeaderboardManager.gd"
 AudioManager="*res://Scenes/Scenes/AudioManager.tscn"
+arcadeManager="*res://Code/Scripts/leave_game_script.gd"
 
 [display]
 

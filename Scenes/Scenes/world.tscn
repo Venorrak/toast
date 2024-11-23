@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://22f7y5815pvg"]
+[gd_scene load_steps=27 format=3 uid="uid://22f7y5815pvg"]
 
 [ext_resource type="Script" path="res://Code/Scripts/world.gd" id="1_kv0b3"]
 [ext_resource type="Texture2D" uid="uid://yj4bge7r8eqy" path="res://Rescources/2d/target.png" id="2_0hxpd"]
@@ -13,7 +13,6 @@
 [ext_resource type="Texture2D" uid="uid://70fborerao6m" path="res://Rescources/2d/toaster.png" id="6_5jxex"]
 [ext_resource type="Script" path="res://Code/Scripts/game_waiting.gd" id="6_p3p0n"]
 [ext_resource type="Script" path="res://Code/Scripts/game_thrown.gd" id="7_aftpo"]
-[ext_resource type="Script" path="res://Code/Scripts/leave_game_script.gd" id="9_2gm1m"]
 [ext_resource type="Script" path="res://Code/Scripts/main_camera.gd" id="9_ehnhd"]
 [ext_resource type="Script" path="res://Code/Scripts/world_camera.gd" id="10_lqw7y"]
 [ext_resource type="Script" path="res://Code/Scripts/grid.gd" id="14_jrhvo"]
@@ -60,40 +59,43 @@ globalShader = NodePath("shaderLayer/Shader")
 noise = SubResource("FastNoiseLite_es3j4")
 nbOfBoost = 4
 nbOfSlow = 4
-nbOfMold = 20
+nbOfMold = 25
 moldPosOffset = 20.0
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_lvsgn")
 initial_state = NodePath("GameDirection")
 
-[node name="GameDirection" type="Node" parent="StateMachine" node_paths=PackedStringArray("thisWorld", "gauge", "gaugeLabel", "toaster")]
+[node name="GameDirection" type="Node" parent="StateMachine" node_paths=PackedStringArray("thisWorld", "gauge", "gaugeLabel", "toaster", "infoLabel")]
 script = ExtResource("3_7bal0")
 thisWorld = NodePath("../..")
 gauge = NodePath("../../HUD/Control/TextureProgressBar")
 gaugeLabel = NodePath("../../HUD/Control/RichTextLabel")
 toaster = NodePath("../../Toaster")
+infoLabel = NodePath("../../HUD/infoLabel")
 
-[node name="GamePower" type="Node" parent="StateMachine" node_paths=PackedStringArray("thisWorld", "HUD", "gauge", "target", "gaugeLabel")]
+[node name="GamePower" type="Node" parent="StateMachine" node_paths=PackedStringArray("thisWorld", "HUD", "gauge", "target", "gaugeLabel", "infoLabel")]
 script = ExtResource("4_vgxeg")
 thisWorld = NodePath("../..")
 HUD = NodePath("../../HUD")
 gauge = NodePath("../../HUD/Control/TextureProgressBar")
 target = NodePath("../../Target")
 gaugeLabel = NodePath("../../HUD/Control/RichTextLabel")
+infoLabel = NodePath("../../HUD/infoLabel")
 
-[node name="GameThrow" type="Node" parent="StateMachine" node_paths=PackedStringArray("thisWorld", "toaster", "gauge", "gaugeLabel")]
+[node name="GameThrow" type="Node" parent="StateMachine" node_paths=PackedStringArray("thisWorld", "toaster", "gauge", "gaugeLabel", "infoLabel")]
 script = ExtResource("5_6m2jq")
 thisWorld = NodePath("../..")
 toaster = NodePath("../../Toaster")
 gauge = NodePath("../../HUD/Control/TextureProgressBar")
 gaugeLabel = NodePath("../../HUD/Control/RichTextLabel")
+infoLabel = NodePath("../../HUD/infoLabel")
 
 [node name="GameWaiting" type="Node" parent="StateMachine" node_paths=PackedStringArray("thisWorld")]
 script = ExtResource("6_p3p0n")
 thisWorld = NodePath("../..")
 
-[node name="GameThrown" type="Node" parent="StateMachine" node_paths=PackedStringArray("thisWorld", "toaster", "target", "toastHome", "HUD", "progressBar")]
+[node name="GameThrown" type="Node" parent="StateMachine" node_paths=PackedStringArray("thisWorld", "toaster", "target", "toastHome", "HUD", "progressBar", "infoLabel")]
 script = ExtResource("7_aftpo")
 thisWorld = NodePath("../..")
 toaster = NodePath("../../Toaster")
@@ -101,6 +103,7 @@ target = NodePath("../../Target")
 toastHome = NodePath("../../Toasts")
 HUD = NodePath("../../HUD")
 progressBar = NodePath("../../HUD/ProgressBar")
+infoLabel = NodePath("../../HUD/infoLabel")
 
 [node name="background" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_736u3")
@@ -250,5 +253,8 @@ bbcode_enabled = true
 text = "[center]100%+10[/center]"
 scroll_active = false
 
-[node name="LeaveGameScript" type="Node" parent="."]
-script = ExtResource("9_2gm1m")
+[node name="infoLabel" type="Label" parent="HUD"]
+offset_top = 620.0
+offset_right = 1152.0
+offset_bottom = 648.0
+theme_override_font_sizes/font_size = 20
