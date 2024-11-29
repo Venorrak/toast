@@ -8,7 +8,7 @@ Ce jeu est un jeu de curling où, au lieu de lancer une pierre sur de la glace, 
 ## Conception
 
 ### QTE (Quick Time Events) mini-jeu
-![QTE demo](README/qte.mp4)
+![QTE demo](README/qte.gif)
 
 Après avoir choisi la quantité de puissance qu'il veut appliquer à la toast, le joueur doit jouer au mini-jeu pour déterminer l'incertitude de la puissance de son lancer. Le mini-jeu consiste à appuyer sur les bonnes touches (directions, A & B) au bon moment (vis-à-vis de leur cible correspondante). Ensuite, en fonction du nombre de qte réussis, le joueur se verra attribuer une incertitude à la puissance. Par exemple, dans le cas où le joueur manque 5 qte et que l'incertitude maximale est de 20%, l'incertitude sera de plus ou moins 10%.
 
@@ -27,7 +27,7 @@ Pour commencer, je crée le nombre de qte que je veux et lui donne un type aléa
 
 ### Trace de beurre
 
-![Trace de beurre demo](README/trace.mp4)
+![Trace de beurre demo](README/trace.gif)
 
 Quand une toast est lancée, elle laisse une trace de beurre derrière elle qui retrecit plus elle va loin. Quand la toast n'a plus de beurre, elle ralentit drastiquement. Quand la toast passe sur du beurre (collectible), cela rallonge la distance qu'elle peut parcourir avant de manquer de beurre.
 
