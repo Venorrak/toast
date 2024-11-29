@@ -18,8 +18,7 @@ func _physics_process(delta: float) -> void:
 			camera.make_current()
 		position = lerp(position, camera.position, 0.4)
 		zoom = lerp(zoom, camera.zoom, 0.1)
-		
-	if Input.is_action_pressed("altView"):
+	else:
 		position = lerp(position, worldCameraFinalPosition, 0.4)
 		zoom = lerp(zoom, worldCameraFinalZoom, 0.1)	
 	
